@@ -1,11 +1,18 @@
 package com.example.ninja.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
 public class Recipe {
+    @PrimaryKey
+    @NonNull
     private String id;
     private String userID;
 

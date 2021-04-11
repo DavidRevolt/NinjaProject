@@ -1,6 +1,14 @@
 package com.example.ninja.model;
 
+
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Appliance {
+    @PrimaryKey
+    @NonNull
     private String id;
     private String name;
 

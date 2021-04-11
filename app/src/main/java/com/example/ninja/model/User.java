@@ -1,9 +1,16 @@
 package com.example.ninja.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class User {
+    @PrimaryKey
+    @NonNull
     private String id;
     private String full_name;
     private String password;
