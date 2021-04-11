@@ -14,17 +14,20 @@ public class Recipe {
     @PrimaryKey
     @NonNull
     private String id;
-    private String userID;
+    private String userCreatorId;
 
     private String title;
     private String imgURL;
-    private Duration prepTime;
-    private Duration cookTime;
+    private int prepTime;
+    private int cookTime;
     private int likesCounter;
-    private Date creationDate;
+    private String creationDate;
 
-    private List<Appliance> appliances = new ArrayList<>();
-    private List<Category> categories = new ArrayList<>();
+    private String applianceID;
+    private String categoryID;
+
+
+
 
     public String getId() {
         return id;
@@ -34,12 +37,12 @@ public class Recipe {
         this.id = id;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getUserCreatorId() {
+        return userCreatorId;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setUserCreatorId(String userID) {
+        this.userCreatorId = userID;
     }
 
     public String getTitle() {
@@ -58,22 +61,6 @@ public class Recipe {
         this.imgURL = imgURL;
     }
 
-    public Duration getPrepTime() {
-        return prepTime;
-    }
-
-    public void setPrepTime(Duration prepTime) {
-        this.prepTime = prepTime;
-    }
-
-    public Duration getCookTime() {
-        return cookTime;
-    }
-
-    public void setCookTime(Duration cookTime) {
-        this.cookTime = cookTime;
-    }
-
     public int getLikesCounter() {
         return likesCounter;
     }
@@ -82,48 +69,43 @@ public class Recipe {
         this.likesCounter = likesCounter;
     }
 
-    public Date getCreationDate() {
+    public String getApplianceID() {
+        return applianceID;
+    }
+
+    public void setApplianceID(String applianceID) {
+        this.applianceID = applianceID;
+    }
+
+    public String getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(String categoryID) {
+        this.categoryID = categoryID;
+    }
+
+    public int getPrepTime() {
+        return prepTime;
+    }
+
+    public void setPrepTime(int prepTime) {
+        this.prepTime = prepTime;
+    }
+
+    public int getCookTime() {
+        return cookTime;
+    }
+
+    public void setCookTime(int cookTime) {
+        this.cookTime = cookTime;
+    }
+
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
-    }
-
-
-    //APPLIANCES
-    public List<Appliance> getAppliances() {
-        return appliances;
-    }
-
-    public void setAppliances(List<Appliance> appliances) {
-        this.appliances = appliances;
-    }
-
-    public void addAppliance(Appliance app) {
-        this.appliances.add(app);
-    }
-
-    public void delAppliance(Appliance app) {
-        this.appliances.remove(app);
-    }
-
-
-    //Categories
-
-    public List<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
-    }
-
-    public void addCategory(Category cat) {
-        this.categories.add(cat);
-    }
-
-    public void delCategory(Category cat) {
-        this.categories.remove(cat);
     }
 }

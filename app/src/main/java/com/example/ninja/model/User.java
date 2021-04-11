@@ -17,9 +17,6 @@ public class User {
     private String password;
     private String email;
 
-    private List<Recipe> myFavorites = new ArrayList<>();
-    private List<Recipe> myRecipes = new ArrayList<>();
-
 
     public String getId() {
         return id;
@@ -54,40 +51,4 @@ public class User {
     }
 
 
-    //FAVORITES
-    public List<Recipe> getMyFavorites() {
-        return myFavorites;
-    }
-
-    public void setMyFavorites(List<Recipe> myFavorites) {
-        this.myFavorites = myFavorites;
-    }
-
-    public void addFavorite(Recipe favorite) {
-        this.myFavorites.add(favorite);
-    }
-
-    public void delFavorite(Recipe favorite) {
-        this.myFavorites.remove(favorite);
-    }
-
-
-
-
-    //USER OWN RECIPES
-    public List<Recipe> getMyRecipes() {
-        return myRecipes;
-    }
-
-    public void setMyRecipes(List<Recipe> myRecipes) {
-        this.myRecipes = myRecipes;
-    }
-
-    public void addMyRecipe(Recipe myNewRecipe) {
-        this.myRecipes.add(myNewRecipe);
-    }
-
-    public void delMyRecipe(Recipe myNewRecipe) {
-        this.myRecipes.remove(myNewRecipe);
-    }
 }

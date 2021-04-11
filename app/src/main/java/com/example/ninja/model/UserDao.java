@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.util.List;
@@ -22,8 +23,9 @@ public interface UserDao {
     @Update
     public void updateUsers(User... users);
 
-    @Query("select * from User")
-    List<User> getAll();
+    @Transaction
+    @Query("SELECT * FROM User where User.id = :id")
+    public List<UserWithRecipes> getUsersWithRecipes(String id);
 
 
 }
