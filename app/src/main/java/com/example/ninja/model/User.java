@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 import java.util.ArrayList;
 import java.util.List;
 
+//SCHEMA
 @Entity
 public class User {
     @PrimaryKey
