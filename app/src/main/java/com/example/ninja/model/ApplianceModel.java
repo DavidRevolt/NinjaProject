@@ -81,12 +81,12 @@ public class ApplianceModel {
     public interface GetApplianceRecipesListener{
         void onComplete(List<ApplianceWithRecipes> data);
     }
-    public void getAllApplianceRecipes(final Appliance appliance, final GetApplianceRecipesListener listener){
+    public void getAllApplianceRecipes(final String id, final GetApplianceRecipesListener listener){
         class MyAsyncTask extends AsyncTask{
             List<ApplianceWithRecipes> data;
             @Override
             protected Object doInBackground(Object[] objects) {
-                data = AppLocalDb.db.applianceDao().getApplianceWithRecipes(appliance.getId());
+                data = AppLocalDb.db.applianceDao().getApplianceWithRecipes(id);
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {

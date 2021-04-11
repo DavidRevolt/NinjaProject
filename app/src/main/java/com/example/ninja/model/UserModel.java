@@ -84,12 +84,12 @@ public class UserModel {
     public interface GetUserRecipesListener{
         void onComplete(List<UserWithRecipes> data);
     }
-    public void getAllUserRecipes(final User user, final GetUserRecipesListener listener){
+    public void getAllUserRecipes(final String id, final GetUserRecipesListener listener){
         class MyAsyncTask extends AsyncTask{
             List<UserWithRecipes> data;
             @Override
             protected Object doInBackground(Object[] objects) {
-                data = AppLocalDb.db.userDao().getUsersWithRecipes(user.getId());
+                data = AppLocalDb.db.userDao().getUsersWithRecipes(id);
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {

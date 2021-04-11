@@ -81,12 +81,12 @@ public class CategoryModel {
     public interface GetCategoryRecipesListener{
         void onComplete(List<CategoryWithRecipes> data);
     }
-    public void getAllCategoryRecipes(final Category category, final GetCategoryRecipesListener listener){
+    public void getAllCategoryRecipes(final String id, final GetCategoryRecipesListener listener){
         class MyAsyncTask extends AsyncTask{
             List<CategoryWithRecipes> data;
             @Override
             protected Object doInBackground(Object[] objects) {
-                data = AppLocalDb.db.categoryDao().getCategoryWithRecipes(category.getId());
+                data = AppLocalDb.db.categoryDao().getCategoryWithRecipes(id);
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {
