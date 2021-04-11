@@ -11,7 +11,7 @@ public class ApplianceModel {
     public interface DelApplianceListener{
         void onComplete();
     }
-    public void delCategory(final Appliance appliance, final DelApplianceListener listener){
+    public void delAppliance(final Appliance appliance, final DelApplianceListener listener){
         class MyAsyncTask extends AsyncTask {
             @Override
             protected Object doInBackground(Object[] objects) {
@@ -34,7 +34,7 @@ public class ApplianceModel {
     public interface AddApplianceListener{
         void onComplete();
     }
-    public void addCategory(final Appliance appliance, final AddApplianceListener listener){
+    public void addAppliance(final Appliance appliance, final AddApplianceListener listener){
         class MyAsyncTask extends AsyncTask {
             @Override
             protected Object doInBackground(Object[] objects) {
@@ -57,7 +57,7 @@ public class ApplianceModel {
     public interface UpdateApplianceListener{
         void onComplete();
     }
-    public void updateCategory(final Appliance appliance, final UpdateApplianceListener listener){
+    public void updateAppliance(final Appliance appliance, final UpdateApplianceListener listener){
         class MyAsyncTask extends AsyncTask {
             @Override
             protected Object doInBackground(Object[] objects) {
@@ -81,7 +81,7 @@ public class ApplianceModel {
     public interface GetApplianceRecipesListener{
         void onComplete(List<ApplianceWithRecipes> data);
     }
-    public void getAllCategoryRecipes(final Appliance appliance, final GetApplianceRecipesListener listener){
+    public void getAllApplianceRecipes(final Appliance appliance, final GetApplianceRecipesListener listener){
         class MyAsyncTask extends AsyncTask{
             List<ApplianceWithRecipes> data;
             @Override
