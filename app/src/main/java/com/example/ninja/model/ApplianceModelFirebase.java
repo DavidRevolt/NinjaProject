@@ -1,5 +1,13 @@
 package com.example.ninja.model;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.List;
 
 public class ApplianceModelFirebase {
@@ -9,6 +17,7 @@ public class ApplianceModelFirebase {
     }
 
     public static void addAppliance(Appliance appliance, ApplianceModel.AddApplianceListener listener) {
+
     }
 
     public static void updateAppliance(Appliance appliance, ApplianceModel.UpdateApplianceListener listener) {
