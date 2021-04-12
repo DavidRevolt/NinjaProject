@@ -1,21 +1,24 @@
 package com.example.ninja.model;
 
+
 import android.os.AsyncTask;
 
 import java.util.List;
 
-public class CategoryModel {
-    public final static CategoryModel instance = new CategoryModel();
-    private CategoryModel(){}
+//OPERATION ON USER CLASS
+public class UserModelSQL {
+    public final static UserModelSQL instance = new UserModelSQL();
+    private UserModelSQL(){}
 
-    public interface DelCategoryListener{
+
+    public interface DelUserListener{
         void onComplete();
     }
-    public void delCategory(final Category category, final DelCategoryListener listener){
+    public void delUser(final User user, final DelUserListener listener){
         class MyAsyncTask extends AsyncTask {
             @Override
             protected Object doInBackground(Object[] objects) {
-                AppLocalDb.db.categoryDao().delete(category);
+                AppLocalDb.db.userDao().delete(user);
                 return null;
             }
 
@@ -31,14 +34,14 @@ public class CategoryModel {
         task.execute();
     }
 
-    public interface AddCategoryListener{
+    public interface AddUserListener{
         void onComplete();
     }
-    public void addCategory(final Category category, final AddCategoryListener listener){
+    public void addUser(final User user, final AddUserListener listener){
         class MyAsyncTask extends AsyncTask {
             @Override
             protected Object doInBackground(Object[] objects) {
-                AppLocalDb.db.categoryDao().insertAll(category);
+                AppLocalDb.db.userDao().insertAll(user);
                 return null;
             }
 
@@ -54,14 +57,14 @@ public class CategoryModel {
         task.execute();
     }
 
-    public interface UpdateCategoryListener{
+    public interface UpdateUserListener{
         void onComplete();
     }
-    public void updateCategory(final Category category, final UpdateCategoryListener listener){
+    public void updateUser(final User user, final UpdateUserListener listener){
         class MyAsyncTask extends AsyncTask {
             @Override
             protected Object doInBackground(Object[] objects) {
-                AppLocalDb.db.categoryDao().updateCategory(category);
+                AppLocalDb.db.userDao().updateUsers(user);
                 return null;
             }
 
@@ -78,15 +81,15 @@ public class CategoryModel {
     }
 
 
-    public interface GetCategoryRecipesListener{
-        void onComplete(List<CategoryWithRecipes> data);
+    public interface GetUserRecipesListener{
+        void onComplete(List<UserWithRecipes> data);
     }
-    public void getAllCategoryRecipes(final String id, final GetCategoryRecipesListener listener){
+    public void getAllUserRecipes(final String id, final GetUserRecipesListener listener){
         class MyAsyncTask extends AsyncTask{
-            List<CategoryWithRecipes> data;
+            List<UserWithRecipes> data;
             @Override
             protected Object doInBackground(Object[] objects) {
-                data = AppLocalDb.db.categoryDao().getCategoryWithRecipes(id);
+                data = AppLocalDb.db.userDao().getUsersWithRecipes(id);
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {
@@ -104,5 +107,4 @@ public class CategoryModel {
         MyAsyncTask task = new MyAsyncTask();
         task.execute();
     }
-
 }

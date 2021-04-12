@@ -1,24 +1,21 @@
 package com.example.ninja.model;
 
-
 import android.os.AsyncTask;
 
 import java.util.List;
 
-//OPERATION ON USER CLASS
-public class UserModel {
-    public final static UserModel instance = new UserModel();
-    private UserModel(){}
+public class RecipeModelSQL {
+    public final static RecipeModelSQL instance = new RecipeModelSQL();
+    private RecipeModelSQL(){}
 
-
-    public interface DelUserListener{
+    public interface DelRecipeListener{
         void onComplete();
     }
-    public void delUser(final User user, final DelUserListener listener){
+    public void delRecipe(final Recipe recipe, final DelRecipeListener listener){
         class MyAsyncTask extends AsyncTask {
             @Override
             protected Object doInBackground(Object[] objects) {
-                AppLocalDb.db.userDao().delete(user);
+                AppLocalDb.db.recipeDao().delete(recipe);
                 return null;
             }
 
@@ -34,14 +31,14 @@ public class UserModel {
         task.execute();
     }
 
-    public interface AddUserListener{
+    public interface AddRecipeListener{
         void onComplete();
     }
-    public void addUser(final User user, final AddUserListener listener){
+    public void addRecipe(final Recipe recipe, final AddRecipeListener listener){
         class MyAsyncTask extends AsyncTask {
             @Override
             protected Object doInBackground(Object[] objects) {
-                AppLocalDb.db.userDao().insertAll(user);
+                AppLocalDb.db.recipeDao().insertAll(recipe);
                 return null;
             }
 
@@ -57,14 +54,14 @@ public class UserModel {
         task.execute();
     }
 
-    public interface UpdateUserListener{
+    public interface UpdateRecipeListener{
         void onComplete();
     }
-    public void updateUser(final User user, final UpdateUserListener listener){
+    public void updateRecipe(final Recipe recipe, final UpdateRecipeListener listener){
         class MyAsyncTask extends AsyncTask {
             @Override
             protected Object doInBackground(Object[] objects) {
-                AppLocalDb.db.userDao().updateUsers(user);
+                AppLocalDb.db.recipeDao().updateRecipe(recipe);
                 return null;
             }
 
@@ -81,15 +78,15 @@ public class UserModel {
     }
 
 
-    public interface GetUserRecipesListener{
-        void onComplete(List<UserWithRecipes> data);
+    public interface GetAllRecipesListener{
+        void onComplete(List<Recipe> data);
     }
-    public void getAllUserRecipes(final String id, final GetUserRecipesListener listener){
+    public void getAllRecipes(final GetAllRecipesListener listener){
         class MyAsyncTask extends AsyncTask{
-            List<UserWithRecipes> data;
+            List<Recipe> data;
             @Override
             protected Object doInBackground(Object[] objects) {
-                data = AppLocalDb.db.userDao().getUsersWithRecipes(id);
+                data = AppLocalDb.db.recipeDao().getAll();
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {
@@ -107,4 +104,5 @@ public class UserModel {
         MyAsyncTask task = new MyAsyncTask();
         task.execute();
     }
+
 }

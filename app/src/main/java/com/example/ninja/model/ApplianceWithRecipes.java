@@ -7,10 +7,10 @@ import java.util.List;
 
 public class ApplianceWithRecipes {
     @Embedded
-    public User user;
+    public Appliance appliance;
     @Relation(
             parentColumn = "id",
-            entityColumn = "categoryID"
+            entityColumn = "applianceID"
     )
     public List<Recipe> recipes;
 }

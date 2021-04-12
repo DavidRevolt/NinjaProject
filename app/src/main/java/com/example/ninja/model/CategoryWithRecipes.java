@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CategoryWithRecipes {
     @Embedded
-    public User user;
+    public Category category;
     @Relation(
             parentColumn = "id",
             entityColumn = "categoryID"
