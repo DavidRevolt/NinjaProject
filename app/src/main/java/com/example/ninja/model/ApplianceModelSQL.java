@@ -5,8 +5,7 @@ import android.os.AsyncTask;
 import java.util.List;
 
 public class ApplianceModelSQL {
-    public final static ApplianceModelSQL instance = new ApplianceModelSQL();
-    private ApplianceModelSQL(){}
+
 
     public interface DelApplianceListener{
         void onComplete();

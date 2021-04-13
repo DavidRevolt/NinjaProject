@@ -8,6 +8,9 @@ public class ApplianceModel {
     public final static ApplianceModel instance = new ApplianceModel();
     private ApplianceModel(){}
 
+    ApplianceModelFirebase modelFirebase = new ApplianceModelFirebase();
+    ApplianceModelSQL modelSql = new ApplianceModelSQL();
+
 
 
     public interface DelApplianceListener{
@@ -26,7 +29,7 @@ public class ApplianceModel {
     }
 
 
-    public interface UpdateApplianceListener{
+    public interface UpdateApplianceListener extends AddApplianceListener{
         void onComplete();
     }
     public void updateAppliance(final Appliance appliance, final UpdateApplianceListener listener){
@@ -43,9 +46,16 @@ public class ApplianceModel {
 
 
     public interface GetApplianceRecipesListener{
-        void onComplete(List<ApplianceWithRecipes> data);
+        void onComplete(List<Recipe> data);
     }
     public void getAllApplianceRecipes(final String id, final GetApplianceRecipesListener listener){
         ApplianceModelFirebase.getAllApplianceRecipes(id,listener);
+    }
+
+    public interface GetApplianceListener{
+        void onComplete(Appliance appliance);
+    }
+    public void getAppliance(String id, GetApplianceListener listener){
+        modelFirebase.getAppliance( id,  listener);
     }
 }

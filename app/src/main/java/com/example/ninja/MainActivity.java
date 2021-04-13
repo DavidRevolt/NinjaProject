@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.ninja.model.Appliance;
+import com.example.ninja.model.ApplianceModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,24 +32,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-
-
-        Appliance appliance = new Appliance();
-        appliance.setName("Ninja Blender");
-        appliance.setId("2");
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("appliances").document(appliance.getId())
-                .set(appliance).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d("TAG","appliance added successfully");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("TAG","fail adding appliance");
-            }
-        });
 
     }
 
