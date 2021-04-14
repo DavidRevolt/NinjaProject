@@ -5,8 +5,7 @@ import android.os.AsyncTask;
 import java.util.List;
 
 public class CategoryModelSQL {
-    public final static CategoryModelSQL instance = new CategoryModelSQL();
-    private CategoryModelSQL(){}
+
 
     public interface DelCategoryListener{
         void onComplete();

@@ -7,9 +7,6 @@ import java.util.List;
 
 //OPERATION ON USER CLASS
 public class UserModelSQL {
-    public final static UserModelSQL instance = new UserModelSQL();
-    private UserModelSQL(){}
-
 
     public interface DelUserListener{
         void onComplete();

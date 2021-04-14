@@ -15,12 +15,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ApplianceModelFirebase {
+public class UserModelFirebase {
 
 
-    public void delAppliance(Appliance appliance, ApplianceModel.DelApplianceListener listener) {
+    public void delUser(User user, UserModel.DelUserListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("appliances").document(appliance.getId())
+        db.collection("users").document(user.getId())
                 .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -30,38 +30,38 @@ public class ApplianceModelFirebase {
     }
 
 
-    public void addAppliance(Appliance appliance, ApplianceModel.AddApplianceListener listener) {
+    public void addUser(User user, UserModel.AddUserListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("appliances").document(appliance.getId())
-                .set(appliance).addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("users").document(user.getId())
+                .set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.d("TAG","appliance added successfully");
+                Log.d("TAG","User added successfully");
                 listener.onComplete();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d("TAG","failed adding appliance");
+                Log.d("TAG","failed adding User");
                 listener.onComplete();
             }
         });
     }
 
-    public void updateAppliance(Appliance appliance, ApplianceModel.UpdateApplianceListener listener) {
-        addAppliance(appliance,listener);
+    public void updateUser(User user, UserModel.UpdateUserListener listener) {
+        addUser(user,listener);
     }
 
-    public void GetAllAppliances(ApplianceModel.GetAllAppliances listener) {
+    public void GetAllUsers(UserModel.GetAllUsers listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("appliances").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<Appliance> data = new LinkedList<Appliance>();
+                List<User> data = new LinkedList<User>();
                 if (task.isSuccessful()){
                     for (DocumentSnapshot doc:task.getResult()) {
-                        Appliance app = doc.toObject(Appliance.class);
-                        data.add(app);
+                        User us = doc.toObject(User.class);
+                        data.add(us);
                     }
                 }
                 listener.onComplete(data);
@@ -69,9 +69,9 @@ public class ApplianceModelFirebase {
         });
     }
 
-    public void getAllApplianceRecipes(String id, ApplianceModel.GetApplianceRecipesListener listener) {
+    public void getAllUserRecipes(String id, UserModel.GetUserRecipesListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("recipes").whereEqualTo("applianceID",id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("users").whereEqualTo("userCreatorId",id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<Recipe> data = new LinkedList<Recipe>();
@@ -86,19 +86,19 @@ public class ApplianceModelFirebase {
         });
     }
 
-    public void getAppliance(String id, ApplianceModel.GetApplianceListener listener) {
+    public void getUser(String id, UserModel.GetUserListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("appliances").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("users").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                Appliance appliance = null;
+                User user = null;
                 if (task.isSuccessful()){
                     DocumentSnapshot doc = task.getResult();
                     if (doc != null) {
-                        appliance = task.getResult().toObject(Appliance.class);
+                        user = task.getResult().toObject(User.class);
                     }
                 }
-                listener.onComplete(appliance);
+                listener.onComplete(user);
             }
         });
     }

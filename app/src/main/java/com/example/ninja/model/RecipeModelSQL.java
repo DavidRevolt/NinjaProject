@@ -5,8 +5,7 @@ import android.os.AsyncTask;
 import java.util.List;
 
 public class RecipeModelSQL {
-    public final static RecipeModelSQL instance = new RecipeModelSQL();
-    private RecipeModelSQL(){}
+
 
     public interface DelRecipeListener{
         void onComplete();

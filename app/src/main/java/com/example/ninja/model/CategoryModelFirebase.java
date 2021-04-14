@@ -15,12 +15,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ApplianceModelFirebase {
+public class CategoryModelFirebase {
 
 
-    public void delAppliance(Appliance appliance, ApplianceModel.DelApplianceListener listener) {
+    public void delCategory(Category category, CategoryModel.DelCategoryListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("appliances").document(appliance.getId())
+        db.collection("categories").document(category.getId())
                 .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -30,38 +30,38 @@ public class ApplianceModelFirebase {
     }
 
 
-    public void addAppliance(Appliance appliance, ApplianceModel.AddApplianceListener listener) {
+    public void addCategory(Category category, CategoryModel.AddCategoryListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("appliances").document(appliance.getId())
-                .set(appliance).addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("categories").document(category.getId())
+                .set(category).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.d("TAG","appliance added successfully");
+                Log.d("TAG","Category added successfully");
                 listener.onComplete();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d("TAG","failed adding appliance");
+                Log.d("TAG","failed adding Category");
                 listener.onComplete();
             }
         });
     }
 
-    public void updateAppliance(Appliance appliance, ApplianceModel.UpdateApplianceListener listener) {
-        addAppliance(appliance,listener);
+    public void updateCategory(Category category, CategoryModel.UpdateCategoryListener listener) {
+        addCategory(category,listener);
     }
 
-    public void GetAllAppliances(ApplianceModel.GetAllAppliances listener) {
+    public void GetAllCategories(CategoryModel.GetAllCategories listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("appliances").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("categories").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<Appliance> data = new LinkedList<Appliance>();
+                List<Category> data = new LinkedList<Category>();
                 if (task.isSuccessful()){
                     for (DocumentSnapshot doc:task.getResult()) {
-                        Appliance app = doc.toObject(Appliance.class);
-                        data.add(app);
+                        Category cat = doc.toObject(Category.class);
+                        data.add(cat);
                     }
                 }
                 listener.onComplete(data);
@@ -69,9 +69,9 @@ public class ApplianceModelFirebase {
         });
     }
 
-    public void getAllApplianceRecipes(String id, ApplianceModel.GetApplianceRecipesListener listener) {
+    public void getAllCategoryRecipes(String id, CategoryModel.GetCategoryRecipesListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("recipes").whereEqualTo("applianceID",id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("categories").whereEqualTo("categoryID",id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<Recipe> data = new LinkedList<Recipe>();
@@ -86,19 +86,19 @@ public class ApplianceModelFirebase {
         });
     }
 
-    public void getAppliance(String id, ApplianceModel.GetApplianceListener listener) {
+    public void getCategory(String id, CategoryModel.GetCategoryListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("appliances").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("categories").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                Appliance appliance = null;
+                Category category = null;
                 if (task.isSuccessful()){
                     DocumentSnapshot doc = task.getResult();
                     if (doc != null) {
-                        appliance = task.getResult().toObject(Appliance.class);
+                        category = task.getResult().toObject(Category.class);
                     }
                 }
-                listener.onComplete(appliance);
+                listener.onComplete(category);
             }
         });
     }

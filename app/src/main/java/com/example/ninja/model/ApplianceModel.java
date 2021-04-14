@@ -17,7 +17,7 @@ public class ApplianceModel {
         void onComplete();
     }
     public void delAppliance(final Appliance appliance, final DelApplianceListener listener){
-        ApplianceModelFirebase.delAppliance(appliance,listener);
+        modelFirebase.delAppliance(appliance,listener);
     }
 
 
@@ -25,7 +25,7 @@ public class ApplianceModel {
         void onComplete();
     }
     public void addAppliance(final Appliance appliance, final AddApplianceListener listener){
-        ApplianceModelFirebase.addAppliance(appliance,listener);
+        modelFirebase.addAppliance(appliance,listener);
     }
 
 
@@ -33,7 +33,7 @@ public class ApplianceModel {
         void onComplete();
     }
     public void updateAppliance(final Appliance appliance, final UpdateApplianceListener listener){
-        ApplianceModelFirebase.updateAppliance(appliance,listener);
+        modelFirebase.updateAppliance(appliance,listener);
     }
 
 
@@ -41,7 +41,7 @@ public class ApplianceModel {
         void onComplete(List<Appliance> data);
     }
     public void GetAllAppliances(final GetAllAppliances listener){
-        ApplianceModelFirebase.GetAllAppliances(listener);
+        modelFirebase.GetAllAppliances(listener);
     }
 
 
@@ -49,7 +49,7 @@ public class ApplianceModel {
         void onComplete(List<Recipe> data);
     }
     public void getAllApplianceRecipes(final String id, final GetApplianceRecipesListener listener){
-        ApplianceModelFirebase.getAllApplianceRecipes(id,listener);
+        modelFirebase.getAllApplianceRecipes(id,listener);
     }
 
     public interface GetApplianceListener{
