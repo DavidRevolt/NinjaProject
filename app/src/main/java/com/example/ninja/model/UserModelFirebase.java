@@ -52,7 +52,7 @@ public class UserModelFirebase {
         addUser(user,listener);
     }
 
-    public void GetAllUsers(UserModel.GetAllUsers listener) {
+    public void GetAllUsers(UserModel.GetAllUsersListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

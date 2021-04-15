@@ -2,6 +2,8 @@ package com.example.ninja.model;
 
 import android.os.AsyncTask;
 
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.List;
 
 public class CategoryModel {
@@ -35,26 +37,52 @@ public class CategoryModel {
     }
 
 
-    public interface GetAllCategories{
+
+
+    MutableLiveData<List<Category>> categoriesList = new MutableLiveData<List<Category>>();
+    public interface GetAllCategoriesListener {
         void onComplete(List<Category> data);
     }
-    public void GetAllCategories(final GetAllCategories listener){
-        modelFirebase.GetAllCategories(listener);
+    public MutableLiveData<List<Category>> GetAllCategories(){
+        modelFirebase.GetAllCategories(new GetAllCategoriesListener() {
+            @Override
+            public void onComplete(List<Category> data) {
+                categoriesList.setValue(data);
+            }
+        });
+        return categoriesList;
     }
 
 
+
+    MutableLiveData<List<Recipe>> categoryRecipes = new MutableLiveData<List<Recipe>>();
     public interface GetCategoryRecipesListener{
         void onComplete(List<Recipe> data);
     }
-    public void getAllCategoryRecipes(final String id, final GetCategoryRecipesListener listener){
-        modelFirebase.getAllCategoryRecipes(id,listener);
+    public MutableLiveData<List<Recipe>> getAllCategoryRecipes(final String id){
+        modelFirebase.getAllCategoryRecipes(id, new GetCategoryRecipesListener() {
+            @Override
+            public void onComplete(List<Recipe> data) {
+                categoryRecipes.setValue(data);
+            }
+        });
+        return categoryRecipes;
     }
 
+
+
+    MutableLiveData<Category> category = new MutableLiveData<Category>();
     public interface GetCategoryListener{
         void onComplete(Category category);
     }
-    public void getCategory(String id, GetCategoryListener listener){
-        modelFirebase.getCategory( id,  listener);
+    public MutableLiveData<Category> getCategory(String id){
+        modelFirebase.getCategory(id, new GetCategoryListener() {
+            @Override
+            public void onComplete(Category data) {
+                category.setValue(data);
+            }
+        });
+        return category;
     }
 
 }

@@ -52,7 +52,7 @@ public class ApplianceModelFirebase {
         addAppliance(appliance,listener);
     }
 
-    public void GetAllAppliances(ApplianceModel.GetAllAppliances listener) {
+    public void GetAllAppliances(ApplianceModel.GetAllAppliancesListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("appliances").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

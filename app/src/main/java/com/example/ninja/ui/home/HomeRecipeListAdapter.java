@@ -19,9 +19,11 @@ public class HomeRecipeListAdapter extends RecyclerView.Adapter<HomeRecipeListVi
     LayoutInflater inflater;
     private OnItemClickListener listener;
 
+
     //Constructor
     public HomeRecipeListAdapter(LayoutInflater inflater){
         this.inflater = inflater;
+
     }
 
     //Click
@@ -50,6 +52,9 @@ public class HomeRecipeListAdapter extends RecyclerView.Adapter<HomeRecipeListVi
 
     @Override
     public int getItemCount() {
+        if (data == null){
+            return 0;
+        }
         return data.size();
     }
 }

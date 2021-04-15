@@ -53,7 +53,7 @@ public class RecipeModelFirebase {
         addRecipe(recipe,listener);
     }
 
-    public void GetAllRecipes(RecipeModel.GetAllRecipes listener) {
+    public void GetAllRecipes(RecipeModel.GetAllRecipesListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("recipes").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

@@ -52,7 +52,7 @@ public class CategoryModelFirebase {
         addCategory(category,listener);
     }
 
-    public void GetAllCategories(CategoryModel.GetAllCategories listener) {
+    public void GetAllCategories(CategoryModel.GetAllCategoriesListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("categories").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

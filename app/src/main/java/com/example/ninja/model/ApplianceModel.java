@@ -2,6 +2,8 @@ package com.example.ninja.model;
 
 import android.os.AsyncTask;
 
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.List;
 
 public class ApplianceModel {
@@ -21,12 +23,16 @@ public class ApplianceModel {
     }
 
 
+
+
     public interface AddApplianceListener{
         void onComplete();
     }
     public void addAppliance(final Appliance appliance, final AddApplianceListener listener){
         modelFirebase.addAppliance(appliance,listener);
     }
+
+
 
 
     public interface UpdateApplianceListener extends AddApplianceListener{
@@ -37,25 +43,50 @@ public class ApplianceModel {
     }
 
 
-    public interface GetAllAppliances{
+
+    MutableLiveData<List<Appliance>> appliancesList = new MutableLiveData<List<Appliance>>();
+    public interface GetAllAppliancesListener{
         void onComplete(List<Appliance> data);
     }
-    public void GetAllAppliances(final GetAllAppliances listener){
-        modelFirebase.GetAllAppliances(listener);
+    public MutableLiveData<List<Appliance>> GetAllAppliances( ){
+        modelFirebase.GetAllAppliances(new GetAllAppliancesListener() {
+            @Override
+            public void onComplete(List<Appliance> data) {
+                appliancesList.setValue(data);
+            }
+        });
+        return appliancesList;
     }
 
 
+
+
+    MutableLiveData<List<Recipe>> applianceRecipes = new MutableLiveData<List<Recipe>>();
     public interface GetApplianceRecipesListener{
         void onComplete(List<Recipe> data);
     }
-    public void getAllApplianceRecipes(final String id, final GetApplianceRecipesListener listener){
-        modelFirebase.getAllApplianceRecipes(id,listener);
+    public MutableLiveData<List<Recipe>> getAllApplianceRecipes(final String id){
+        modelFirebase.getAllApplianceRecipes(id, new GetApplianceRecipesListener() {
+            @Override
+            public void onComplete(List<Recipe> data) {
+                applianceRecipes.setValue(data);
+            }
+        });
+        return applianceRecipes;
     }
 
+
+    MutableLiveData<Appliance> appliance = new MutableLiveData<Appliance>();
     public interface GetApplianceListener{
         void onComplete(Appliance appliance);
     }
-    public void getAppliance(String id, GetApplianceListener listener){
-        modelFirebase.getAppliance( id,  listener);
+    public MutableLiveData<Appliance> getAppliance(String id){
+        modelFirebase.getAppliance(id, new GetApplianceListener() {
+            @Override
+            public void onComplete(Appliance data) {
+                appliance.setValue(data);
+            }
+        });
+        return appliance;
     }
 }

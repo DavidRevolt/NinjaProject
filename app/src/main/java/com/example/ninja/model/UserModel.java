@@ -1,5 +1,7 @@
 package com.example.ninja.model;
 
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.List;
 
 public class UserModel {
@@ -7,6 +9,8 @@ public class UserModel {
     private UserModel(){}
     UserModelFirebase modelFirebase = new UserModelFirebase();
     UserModelSQL modelSql = new UserModelSQL();
+
+
 
 
     public interface DelUserListener{
@@ -17,12 +21,16 @@ public class UserModel {
     }
 
 
+
+
     public interface AddUserListener{
         void onComplete();
     }
     public void addUser(final User user, final AddUserListener listener){
         modelFirebase.addUser(user,listener);
     }
+
+
 
 
     public interface UpdateUserListener extends AddUserListener {
@@ -33,26 +41,53 @@ public class UserModel {
     }
 
 
-    public interface GetAllUsers{
+
+
+    MutableLiveData<List<User>> usersList = new MutableLiveData<List<User>>();
+    public interface GetAllUsersListener{
         void onComplete(List<User> data);
     }
-    public void GetAllUsers(final GetAllUsers listener){
-        modelFirebase.GetAllUsers(listener);
+    public MutableLiveData<List<User>> GetAllUsers(){
+        modelFirebase.GetAllUsers(new GetAllUsersListener() {
+            @Override
+            public void onComplete(List<User> data) {
+                usersList.setValue(data);
+            }
+        });
+        return usersList;
     }
 
 
+
+
+    MutableLiveData<List<Recipe>> userRecipes = new MutableLiveData<List<Recipe>>();
     public interface GetUserRecipesListener{
         void onComplete(List<Recipe> data);
     }
-    public void getAllUserRecipes(final String id, final GetUserRecipesListener listener){
-        modelFirebase.getAllUserRecipes(id,listener);
+    public MutableLiveData<List<Recipe>> getAllUserRecipes(final String id){
+        modelFirebase.getAllUserRecipes(id, new GetUserRecipesListener() {
+            @Override
+            public void onComplete(List<Recipe> data) {
+                userRecipes.setValue(data);
+            }
+        });
+        return userRecipes;
     }
 
+
+
+    MutableLiveData<User> user = new MutableLiveData<User>();
     public interface GetUserListener{
         void onComplete(User user);
     }
-    public void getUser(String id, GetUserListener listener){
-        modelFirebase.getUser( id,  listener);
+    public MutableLiveData<User> getUser(String id){
+        modelFirebase.getUser(id, new GetUserListener() {
+            @Override
+            public void onComplete(User data) {
+                user.setValue(data);
+            }
+        });
+        return user;
     }
 
 }
