@@ -12,14 +12,14 @@ import java.util.List;
 public class HomeViewModel extends ViewModel {
 
     //Data
-    private MutableLiveData<List<Recipe>> recipeList;
+    private LiveData<List<Recipe>> recipeList;
 
     //constructor
     public HomeViewModel() {
         recipeList = RecipeModel.instance.GetAllRecipes();
     }
 
-    public MutableLiveData<List<Recipe>> getRecipeList() {
+    public LiveData<List<Recipe>> getRecipeList() {
         return recipeList;
     }
 }

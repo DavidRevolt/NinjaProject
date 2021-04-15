@@ -2,6 +2,8 @@ package com.example.ninja.model;
 
 import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
+
 import java.util.List;
 
 public class RecipeModelSQL {
@@ -77,31 +79,8 @@ public class RecipeModelSQL {
     }
 
 
-    public interface GetAllRecipesListener{
-        void onComplete(List<Recipe> data);
-    }
-    public void getAllRecipes(final GetAllRecipesListener listener){
-        class MyAsyncTask extends AsyncTask{
-            List<Recipe> data;
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                data = AppLocalDb.db.recipeDao().getAll();
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                listener.onComplete(data);
-            }
-        }
-        MyAsyncTask task = new MyAsyncTask();
-        task.execute();
+    public LiveData<List<Recipe>> getAllRecipes(){
+        return AppLocalDb.db.recipeDao().getAll();
     }
 
 }

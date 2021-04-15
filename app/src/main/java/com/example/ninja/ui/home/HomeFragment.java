@@ -64,30 +64,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-        Recipe rec = new Recipe();
-        rec.setId("1");
-        rec.setCookTime(2);
-        rec.setPrepTime(3);
-        RecipeModel.instance.addRecipe(rec, new RecipeModel.AddRecipeListener() {
-            @Override
-            public void onComplete() {
-
-            }
-        });
-
-        Recipe rec2 = new Recipe();
-        rec2.setId("2");
-        rec2.setCookTime(23);
-        rec2.setPrepTime(43);
-        RecipeModel.instance.addRecipe(rec2, new RecipeModel.AddRecipeListener() {
-            @Override
-            public void onComplete() {
-
-            }
-        });
-
-
-
 
 
         return root;

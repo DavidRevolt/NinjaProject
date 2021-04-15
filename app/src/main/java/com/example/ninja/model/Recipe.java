@@ -55,14 +55,14 @@ public class Recipe {
         userCreatorId = (String)map.get("userCreatorId");
         title = (String)map.get("title");
         imgURL = (String)map.get("imgURL");
-        prepTime = (int)map.get("prepTime");
-        cookTime = (int)map.get("cookTime");
-        totalTime = (int)map.get("totalTime");
-        likesCounter = (int)map.get("likesCounter");
+        prepTime = (int)(long)map.get("prepTime");
+        cookTime = (int)(long)map.get("cookTime");
+        totalTime = (int)(long)map.get("totalTime");
+        likesCounter = (int)(long)map.get("likesCounter");
         creationDate = (String)map.get("creationDate");
         applianceID = (String)map.get("applianceID");
         categoryID = (String)map.get("categoryID");
-        Timestamp ts = (Timestamp)map.get("lastUpdated");
+        Timestamp ts = (Timestamp) map.get("lastUpdated");
         lastUpdated = ts.getSeconds();
     }
 

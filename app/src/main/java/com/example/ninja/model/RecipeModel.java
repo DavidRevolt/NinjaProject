@@ -1,8 +1,12 @@
 package com.example.ninja.model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.ninja.MyApplication;
 import com.google.firebase.firestore.util.Listener;
 
 import java.util.List;
@@ -41,11 +45,16 @@ public class RecipeModel {
 
     //
     //Get All Recipes In Firebase
-    MutableLiveData<List<Recipe>> recipesList = new MutableLiveData<List<Recipe>>();
+
     public interface GetAllRecipesListener{
         void onComplete(List<Recipe> data);
     }
-    public MutableLiveData<List<Recipe>> GetAllRecipes(){
+    LiveData<List<Recipe>> recipesList;
+    public LiveData<List<Recipe>> GetAllRecipes(){
+        if (recipesList == null){
+            recipesList = modelSql.getAllRecipes();
+            refreshGetAllRecipes(null);
+        }
         return recipesList;
     }
 
@@ -54,11 +63,23 @@ public class RecipeModel {
         void onComplete();
     }
     public void refreshGetAllRecipes(refreshGetAllRecipesListener listener){
-        modelFirebase.GetAllRecipes(new GetAllRecipesListener() {
+        final SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
+        long lastUpdated = sp.getLong("lastUpdatedRecipeList",0);
+
+        modelFirebase.GetAllRecipes(lastUpdated, new GetAllRecipesListener() {
             @Override
             public void onComplete(List<Recipe> data) {
-                recipesList.setValue(data);
-                listener.onComplete();
+                long lastUp = 0;
+                for (Recipe rec: data) {
+                    modelSql.addRecipe(rec,null);
+                    if (rec.getLastUpdated()>lastUp){
+                        lastUp = rec.getLastUpdated();
+                    }
+                }
+                sp.edit().putLong("lastUpdatedRecipes", lastUp).commit();
+                if(listener != null) {
+                    listener.onComplete();
+                }
             }
         });
     }

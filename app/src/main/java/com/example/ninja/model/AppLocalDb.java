@@ -7,7 +7,7 @@ import com.example.ninja.MyApplication;
 
 //DB MANGER, update version after every change!
 
-@Database(entities = {Appliance.class, Category.class, Recipe.class, User.class}, version = 4)
+@Database(entities = {Appliance.class, Category.class, Recipe.class, User.class}, version = 5)
 abstract class AppLocalDbRepository extends RoomDatabase {
     public abstract ApplianceDao applianceDao();
     public abstract CategoryDao categoryDao();

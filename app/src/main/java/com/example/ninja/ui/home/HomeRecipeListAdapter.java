@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class HomeRecipeListAdapter extends RecyclerView.Adapter<HomeRecipeListViewHolder>{
 
     //Members
-    public MutableLiveData<List<Recipe>> data;
+    public LiveData<List<Recipe>> data;
     LayoutInflater inflater;
     private OnItemClickListener listener;
 
