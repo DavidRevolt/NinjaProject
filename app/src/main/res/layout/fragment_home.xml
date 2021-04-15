@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <ProgressBar
+        android:id="@+id/homeProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/HomeRecipeList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/HomeRecipeList"
+        app:layout_constraintTop_toTopOf="@+id/HomeRecipeList" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/HomeRecipeList"
         android:layout_width="match_parent"

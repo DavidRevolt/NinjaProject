@@ -12,7 +12,6 @@
         android:layout_height="258dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,8 +24,9 @@
         android:layout_marginTop="4dp"
         android:gravity="center|center_vertical"
         android:text="TextView"
-        app:layout_constraintTop_toBottomOf="@+id/Home_RecipeList_Img"
-        tools:layout_editor_absoluteX="43dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Home_RecipeList_Img" />
 
     <TextView
         android:id="@+id/Home_RecipeList_Prep"

@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,16 +21,26 @@ import com.example.ninja.R;
 import com.example.ninja.model.Recipe;
 import com.example.ninja.model.RecipeModel;
 import com.example.ninja.model.RecipeModelSQL;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    //ViewModel declaration
     private HomeViewModel homeViewModel;
     private List<Recipe> recipes;
     RecyclerView recipeRecyclerView;
+    ProgressBar homeProgressBar;
+    HomeRecipeListAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,27 +59,17 @@ public class HomeFragment extends Fragment {
         });
         */
 
+        homeProgressBar = root.findViewById(R.id.homeProgressBar);
+        homeProgressBar.setVisibility(View.INVISIBLE);
+        recipes = new LinkedList<Recipe>();
+
+
         //List settings
         recipeRecyclerView = root.findViewById(R.id.HomeRecipeList);
         recipeRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recipeRecyclerView.setLayoutManager(layoutManager);
-
-
-
-        //get recipes data setting
-        Recipe rec = new Recipe();
-        rec.setId("1");
-        rec.setTitle("DAVID RECIPE");
-        rec.setPrepTime(1);
-        rec.setCookTime(222);
-        recipes = new LinkedList<Recipe>();
-
-
-        recipes.add(rec);
-
-
-        HomeRecipeListAdapter adapter = new HomeRecipeListAdapter(getLayoutInflater());
+        adapter = new HomeRecipeListAdapter(getLayoutInflater());
         adapter.data = recipes;
         recipeRecyclerView.setAdapter(adapter);
 
@@ -79,9 +81,23 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-
-
+        reloadData();
         return root;
+    }
+
+
+
+
+    void reloadData(){
+        homeProgressBar.setVisibility(View.VISIBLE);
+        RecipeModel.instance.GetAllRecipes(new RecipeModel.GetAllRecipes() {
+            @Override
+            public void onComplete(List<Recipe> data) {
+                recipes=data;
+                homeProgressBar.setVisibility(View.INVISIBLE);
+                adapter.data = recipes;
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }
