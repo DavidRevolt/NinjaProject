@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/Home_RecipeList_Img"
+        android:layout_width="326dp"
+        android:layout_height="258dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/Home_RecipeList_Title"
+        android:layout_width="326dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center|center_vertical"
+        android:text="TextView"
+        app:layout_constraintTop_toBottomOf="@+id/Home_RecipeList_Img"
+        tools:layout_editor_absoluteX="43dp" />
+
+    <TextView
+        android:id="@+id/Home_RecipeList_Prep"
+        android:layout_width="108dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:text="TextView"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/Home_RecipeList_Cook"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Home_RecipeList_Title" />
+
+    <TextView
+        android:id="@+id/Home_RecipeList_Cook"
+        android:layout_width="109dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="40dp"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:text="TextView"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/Home_RecipeList_Total"
+        app:layout_constraintTop_toBottomOf="@+id/Home_RecipeList_Title" />
+
+    <TextView
+        android:id="@+id/Home_RecipeList_Total"
+        android:layout_width="108dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Home_RecipeList_Title" />
+</androidx.constraintlayout.widget.ConstraintLayout>

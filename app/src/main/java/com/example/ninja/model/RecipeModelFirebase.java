@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.LinkedList;
@@ -54,19 +55,22 @@ public class RecipeModelFirebase {
 
     public void GetAllRecipes(RecipeModel.GetAllRecipes listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        List<Recipe> data = new LinkedList<Recipe>();
         db.collection("recipes").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<Recipe> data = new LinkedList<Recipe>();
                 if (task.isSuccessful()){
+                    Log.d("TAG","gettin all Recipes successfully");
                     for (DocumentSnapshot doc:task.getResult()) {
-                        Recipe rec = doc.toObject(Recipe.class);
-                        data.add(rec);
+                        Recipe us = doc.toObject(Recipe.class);
+                        data.add(us);
                     }
+                    listener.onComplete(data);
                 }
-                listener.onComplete(data);
+
             }
         });
+
     }
 
 
