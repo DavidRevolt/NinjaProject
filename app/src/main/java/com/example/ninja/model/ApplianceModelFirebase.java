@@ -33,7 +33,7 @@ public class ApplianceModelFirebase {
     public void addAppliance(Appliance appliance, ApplianceModel.AddApplianceListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("appliances").document(appliance.getId())
-                .set(appliance).addOnSuccessListener(new OnSuccessListener<Void>() {
+                .set(appliance.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d("TAG","appliance added successfully");
@@ -60,7 +60,9 @@ public class ApplianceModelFirebase {
                 List<Appliance> data = new LinkedList<Appliance>();
                 if (task.isSuccessful()){
                     for (DocumentSnapshot doc:task.getResult()) {
-                        Appliance app = doc.toObject(Appliance.class);
+                        Appliance app = new Appliance();
+                        app.fromMap(doc.getData());
+                        //Appliance app = doc.toObject(Appliance.class);
                         data.add(app);
                     }
                 }
@@ -77,7 +79,9 @@ public class ApplianceModelFirebase {
                 List<Recipe> data = new LinkedList<Recipe>();
                 if (task.isSuccessful()){
                     for (DocumentSnapshot doc:task.getResult()) {
-                        Recipe rec = doc.toObject(Recipe.class);
+                        Recipe rec = new Recipe();
+                        rec.fromMap(doc.getData());
+                        //Recipe rec = doc.toObject(Recipe.class);
                         data.add(rec);
                     }
                 }
@@ -95,7 +99,9 @@ public class ApplianceModelFirebase {
                 if (task.isSuccessful()){
                     DocumentSnapshot doc = task.getResult();
                     if (doc != null) {
-                        appliance = task.getResult().toObject(Appliance.class);
+                        appliance = new Appliance();
+                        appliance.fromMap(doc.getData());
+                        //appliance = task.getResult().toObject(Appliance.class);
                     }
                 }
                 listener.onComplete(appliance);

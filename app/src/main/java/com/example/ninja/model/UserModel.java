@@ -12,7 +12,6 @@ public class UserModel {
 
 
 
-
     public interface DelUserListener{
         void onComplete();
     }
@@ -22,14 +21,12 @@ public class UserModel {
 
 
 
-
     public interface AddUserListener{
         void onComplete();
     }
     public void addUser(final User user, final AddUserListener listener){
         modelFirebase.addUser(user,listener);
     }
-
 
 
 
@@ -43,39 +40,59 @@ public class UserModel {
 
 
 
+    //GET ALL USERS
     MutableLiveData<List<User>> usersList = new MutableLiveData<List<User>>();
     public interface GetAllUsersListener{
         void onComplete(List<User> data);
     }
     public MutableLiveData<List<User>> GetAllUsers(){
+        return usersList;
+    }
+
+    //Refresh UsersList^^
+    public interface refreshGetAllUsersListener{
+        void onComplete();
+    }
+    public void refreshGetAllUsers(refreshGetAllUsersListener listener){
         modelFirebase.GetAllUsers(new GetAllUsersListener() {
             @Override
             public void onComplete(List<User> data) {
                 usersList.setValue(data);
+                listener.onComplete();
             }
         });
-        return usersList;
     }
 
 
 
 
+    //GET ALL USER RECIPES
     MutableLiveData<List<Recipe>> userRecipes = new MutableLiveData<List<Recipe>>();
     public interface GetUserRecipesListener{
         void onComplete(List<Recipe> data);
     }
-    public MutableLiveData<List<Recipe>> getAllUserRecipes(final String id){
-        modelFirebase.getAllUserRecipes(id, new GetUserRecipesListener() {
+    public MutableLiveData<List<Recipe>> getAllUserRecipes(){
+        return userRecipes;
+    }
+
+    //Refresh UsersRecipes^^
+    public interface refreshGetAllUserRecipesListener{
+        void onComplete();
+    }
+    public void refreshGetAllUsers(String id , refreshGetAllUserRecipesListener listener){
+        modelFirebase.getAllUserRecipes(id,new GetUserRecipesListener() {
             @Override
             public void onComplete(List<Recipe> data) {
                 userRecipes.setValue(data);
+                listener.onComplete();
             }
         });
-        return userRecipes;
     }
 
 
 
+
+    //GET USER
     MutableLiveData<User> user = new MutableLiveData<User>();
     public interface GetUserListener{
         void onComplete(User user);

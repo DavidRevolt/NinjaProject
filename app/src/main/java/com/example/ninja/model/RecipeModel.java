@@ -38,6 +38,8 @@ public class RecipeModel {
     }
 
 
+
+    //
     //Get All Recipes In Firebase
     MutableLiveData<List<Recipe>> recipesList = new MutableLiveData<List<Recipe>>();
     public interface GetAllRecipesListener{
@@ -64,7 +66,7 @@ public class RecipeModel {
 
 
 
-    //Get Recipe In Firebase
+    //Get Recipe
     MutableLiveData<Recipe> recipe = new MutableLiveData<Recipe>();
     public interface GetRecipeListener{
         void onComplete(Recipe recipe);

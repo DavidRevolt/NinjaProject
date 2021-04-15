@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ninja.R;
@@ -15,7 +16,7 @@ import java.util.List;
 public class HomeRecipeListAdapter extends RecyclerView.Adapter<HomeRecipeListViewHolder>{
 
     //Members
-    public List<Recipe> data;
+    public MutableLiveData<List<Recipe>> data;
     LayoutInflater inflater;
     private OnItemClickListener listener;
 
@@ -46,15 +47,15 @@ public class HomeRecipeListAdapter extends RecyclerView.Adapter<HomeRecipeListVi
 
     @Override
     public void onBindViewHolder(@NonNull HomeRecipeListViewHolder holder, int position) {
-        Recipe recipe = data.get(position);
+        Recipe recipe = data.getValue().get(position);
         holder.bindData(recipe,position);
     }
 
     @Override
     public int getItemCount() {
-        if (data == null){
+        if (data.getValue() == null){
             return 0;
         }
-        return data.size();
+        return data.getValue().size();
     }
 }

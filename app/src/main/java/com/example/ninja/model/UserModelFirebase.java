@@ -33,7 +33,7 @@ public class UserModelFirebase {
     public void addUser(User user, UserModel.AddUserListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").document(user.getId())
-                .set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                .set(user.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d("TAG","User added successfully");
@@ -60,7 +60,9 @@ public class UserModelFirebase {
                 List<User> data = new LinkedList<User>();
                 if (task.isSuccessful()){
                     for (DocumentSnapshot doc:task.getResult()) {
-                        User us = doc.toObject(User.class);
+                        User us = new User();
+                        us.fromMap(doc.getData());
+                        //User us = doc.toObject(User.class);
                         data.add(us);
                     }
                 }
@@ -77,7 +79,9 @@ public class UserModelFirebase {
                 List<Recipe> data = new LinkedList<Recipe>();
                 if (task.isSuccessful()){
                     for (DocumentSnapshot doc:task.getResult()) {
-                        Recipe rec = doc.toObject(Recipe.class);
+                        Recipe rec = new Recipe();
+                        rec.fromMap(doc.getData());
+                        //Recipe rec = doc.toObject(Recipe.class);
                         data.add(rec);
                     }
                 }
@@ -95,7 +99,9 @@ public class UserModelFirebase {
                 if (task.isSuccessful()){
                     DocumentSnapshot doc = task.getResult();
                     if (doc != null) {
-                        user = task.getResult().toObject(User.class);
+                        user = new User();
+                        user.fromMap(doc.getData());
+                        //user = task.getResult().toObject(User.class);
                     }
                 }
                 listener.onComplete(user);

@@ -4,10 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FieldValue;
+
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 public class Recipe {
@@ -20,12 +25,46 @@ public class Recipe {
     private String imgURL;
     private int prepTime;
     private int cookTime;
+    private int totalTime;
     private int likesCounter;
     private String creationDate;
 
     private String applianceID;
     private String categoryID;
+    private Long lastUpdated;
 
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        result.put("userCreatorId", userCreatorId);
+        result.put("title", title);
+        result.put("imgURL", imgURL);
+        result.put("prepTime", prepTime);
+        result.put("cookTime", cookTime);
+        result.put("totalTime", cookTime+prepTime);
+        result.put("likesCounter", likesCounter);
+        result.put("creationDate", creationDate);
+        result.put("applianceID", applianceID);
+        result.put("categoryID", categoryID);
+        result.put("lastUpdated", FieldValue.serverTimestamp());
+        return result;
+    }
+
+    public void fromMap(Map<String, Object> map){
+        id = (String)map.get("id");
+        userCreatorId = (String)map.get("userCreatorId");
+        title = (String)map.get("title");
+        imgURL = (String)map.get("imgURL");
+        prepTime = (int)map.get("prepTime");
+        cookTime = (int)map.get("cookTime");
+        totalTime = (int)map.get("totalTime");
+        likesCounter = (int)map.get("likesCounter");
+        creationDate = (String)map.get("creationDate");
+        applianceID = (String)map.get("applianceID");
+        categoryID = (String)map.get("categoryID");
+        Timestamp ts = (Timestamp)map.get("lastUpdated");
+        lastUpdated = ts.getSeconds();
+    }
 
 
 
@@ -107,5 +146,21 @@ public class Recipe {
 
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public Long getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Long lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public int getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(int totalTime) {
+        this.totalTime = totalTime;
     }
 }

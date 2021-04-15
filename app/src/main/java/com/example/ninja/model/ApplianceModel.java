@@ -34,7 +34,6 @@ public class ApplianceModel {
 
 
 
-
     public interface UpdateApplianceListener extends AddApplianceListener{
         void onComplete();
     }
@@ -44,38 +43,62 @@ public class ApplianceModel {
 
 
 
+
+
+    //GET ALL Appliances
     MutableLiveData<List<Appliance>> appliancesList = new MutableLiveData<List<Appliance>>();
     public interface GetAllAppliancesListener{
         void onComplete(List<Appliance> data);
     }
     public MutableLiveData<List<Appliance>> GetAllAppliances( ){
+        return appliancesList;
+    }
+
+    //Refresh AppliancesList^^
+    public interface refreshGetAllAppliancesListener{
+        void onComplete();
+    }
+    public void refreshGetAllAppliances(refreshGetAllAppliancesListener listener){
         modelFirebase.GetAllAppliances(new GetAllAppliancesListener() {
             @Override
             public void onComplete(List<Appliance> data) {
                 appliancesList.setValue(data);
+                listener.onComplete();
             }
         });
-        return appliancesList;
     }
 
 
 
 
+    //GET ALL Appliance Recipes
     MutableLiveData<List<Recipe>> applianceRecipes = new MutableLiveData<List<Recipe>>();
     public interface GetApplianceRecipesListener{
         void onComplete(List<Recipe> data);
     }
     public MutableLiveData<List<Recipe>> getAllApplianceRecipes(final String id){
-        modelFirebase.getAllApplianceRecipes(id, new GetApplianceRecipesListener() {
-            @Override
-            public void onComplete(List<Recipe> data) {
-                applianceRecipes.setValue(data);
-            }
-        });
         return applianceRecipes;
     }
 
+    //Refresh AplianceRecipes^^
+    public interface refreshGetAllApplianceRecipesListener{
+        void onComplete();
+    }
+    public void refreshGetAllUsers(String id , refreshGetAllApplianceRecipesListener listener){
+        modelFirebase.getAllApplianceRecipes(id,new GetApplianceRecipesListener() {
+            @Override
+            public void onComplete(List<Recipe> data) {
+                applianceRecipes.setValue(data);
+                listener.onComplete();
+            }
+        });
+    }
 
+
+
+
+
+    //GET APPLIANCE
     MutableLiveData<Appliance> appliance = new MutableLiveData<Appliance>();
     public interface GetApplianceListener{
         void onComplete(Appliance appliance);

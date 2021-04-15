@@ -33,7 +33,7 @@ public class CategoryModelFirebase {
     public void addCategory(Category category, CategoryModel.AddCategoryListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("categories").document(category.getId())
-                .set(category).addOnSuccessListener(new OnSuccessListener<Void>() {
+                .set(category.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d("TAG","Category added successfully");
@@ -60,7 +60,9 @@ public class CategoryModelFirebase {
                 List<Category> data = new LinkedList<Category>();
                 if (task.isSuccessful()){
                     for (DocumentSnapshot doc:task.getResult()) {
-                        Category cat = doc.toObject(Category.class);
+                        Category cat = new Category();
+                        cat.fromMap(doc.getData());
+                        //Category cat = doc.toObject(Category.class);
                         data.add(cat);
                     }
                 }
@@ -77,7 +79,9 @@ public class CategoryModelFirebase {
                 List<Recipe> data = new LinkedList<Recipe>();
                 if (task.isSuccessful()){
                     for (DocumentSnapshot doc:task.getResult()) {
-                        Recipe rec = doc.toObject(Recipe.class);
+                        Recipe rec = new Recipe();
+                        rec.fromMap(doc.getData());
+                        //Recipe rec = doc.toObject(Recipe.class);
                         data.add(rec);
                     }
                 }
@@ -95,7 +99,9 @@ public class CategoryModelFirebase {
                 if (task.isSuccessful()){
                     DocumentSnapshot doc = task.getResult();
                     if (doc != null) {
-                        category = task.getResult().toObject(Category.class);
+                        category = new Category();
+                        category.fromMap(doc.getData());
+                        //category = task.getResult().toObject(Category.class);
                     }
                 }
                 listener.onComplete(category);

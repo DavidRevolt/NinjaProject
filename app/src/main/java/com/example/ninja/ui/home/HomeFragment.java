@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.ninja.R;
+import com.example.ninja.model.Appliance;
 import com.example.ninja.model.Recipe;
 import com.example.ninja.model.RecipeModel;
 import java.util.List;
@@ -41,17 +42,18 @@ public class HomeFragment extends Fragment {
         recipeRecyclerView.setLayoutManager(layoutManager);
 
         adapter = new HomeRecipeListAdapter(getLayoutInflater());
-        adapter.data = homeViewModel.getRecipeList().getValue();
-        recipeRecyclerView.setAdapter(adapter);
+        adapter.data = homeViewModel.getRecipeList();
 
 
         homeViewModel.getRecipeList().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
             @Override
             public void onChanged(List<Recipe> recipes) {
-                adapter.notifyDataSetChanged();
                 Log.d("TAG", "<<<<LIVEDATA CHANGED!>>>");
+                adapter.notifyDataSetChanged();
             }
         });
+        refreshData();
+        recipeRecyclerView.setAdapter(adapter);
 
         adapter.setOnClickListener(new HomeRecipeListAdapter.OnItemClickListener() {
             @Override
@@ -61,7 +63,33 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        refreshData();
+
+        Recipe rec = new Recipe();
+        rec.setId("1");
+        rec.setCookTime(2);
+        rec.setPrepTime(3);
+        RecipeModel.instance.addRecipe(rec, new RecipeModel.AddRecipeListener() {
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
+        Recipe rec2 = new Recipe();
+        rec2.setId("2");
+        rec2.setCookTime(23);
+        rec2.setPrepTime(43);
+        RecipeModel.instance.addRecipe(rec2, new RecipeModel.AddRecipeListener() {
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
+
+
+
+
         return root;
     }
 

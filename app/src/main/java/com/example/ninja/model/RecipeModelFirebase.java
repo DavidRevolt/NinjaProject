@@ -34,7 +34,7 @@ public class RecipeModelFirebase {
     public void addRecipe(Recipe recipe, RecipeModel.AddRecipeListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("recipes").document(recipe.getId())
-                .set(recipe).addOnSuccessListener(new OnSuccessListener<Void>() {
+                .set(recipe.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d("TAG","Recipe added successfully");
@@ -63,7 +63,9 @@ public class RecipeModelFirebase {
                     Log.d("TAG", "<<<<GET ALL RECIPES FROM FIREBASE>>>");
                     for (DocumentSnapshot document:task.getResult()) {
                         Log.d("TAG", document.getId() + " => " + document.getData());
-                        Recipe rec = document.toObject(Recipe.class);
+                        Recipe rec = new Recipe();
+                        rec.fromMap(document.getData());
+                        //Recipe rec = document.toObject(Recipe.class);
                         data.add(rec);
                     }
                 }
@@ -83,7 +85,9 @@ public class RecipeModelFirebase {
                 if (task.isSuccessful()){
                     DocumentSnapshot doc = task.getResult();
                     if (doc != null) {
-                        recipe = task.getResult().toObject(Recipe.class);
+                        recipe = new Recipe();
+                        recipe.fromMap(doc.getData());
+                        //recipe = task.getResult().toObject(Recipe.class);
                     }
                 }
                 listener.onComplete(recipe);

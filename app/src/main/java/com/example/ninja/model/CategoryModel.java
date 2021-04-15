@@ -38,39 +38,60 @@ public class CategoryModel {
 
 
 
-
+    //GET ALL CATEGORIES
     MutableLiveData<List<Category>> categoriesList = new MutableLiveData<List<Category>>();
     public interface GetAllCategoriesListener {
         void onComplete(List<Category> data);
     }
     public MutableLiveData<List<Category>> GetAllCategories(){
+        return categoriesList;
+    }
+
+    //Refresh CategoriesList^^
+    public interface refreshGetAllCategoriesListener{
+        void onComplete();
+    }
+    public void refreshGetAllCategories(refreshGetAllCategoriesListener listener){
         modelFirebase.GetAllCategories(new GetAllCategoriesListener() {
             @Override
             public void onComplete(List<Category> data) {
                 categoriesList.setValue(data);
+                listener.onComplete();
             }
         });
-        return categoriesList;
     }
 
 
 
+
+
+    //GET ALL Category RECIPES
     MutableLiveData<List<Recipe>> categoryRecipes = new MutableLiveData<List<Recipe>>();
     public interface GetCategoryRecipesListener{
         void onComplete(List<Recipe> data);
     }
     public MutableLiveData<List<Recipe>> getAllCategoryRecipes(final String id){
-        modelFirebase.getAllCategoryRecipes(id, new GetCategoryRecipesListener() {
+        return categoryRecipes;
+    }
+
+    //Refresh CategoryRecipes^^
+    public interface refreshGetAllCategoryRecipesListener{
+        void onComplete();
+    }
+    public void refreshGetAllUsers(String id , refreshGetAllCategoryRecipesListener listener){
+        modelFirebase.getAllCategoryRecipes(id,new GetCategoryRecipesListener() {
             @Override
             public void onComplete(List<Recipe> data) {
                 categoryRecipes.setValue(data);
+                listener.onComplete();
             }
         });
-        return categoryRecipes;
     }
 
 
 
+
+    //Get Category
     MutableLiveData<Category> category = new MutableLiveData<Category>();
     public interface GetCategoryListener{
         void onComplete(Category category);
