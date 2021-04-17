@@ -3,6 +3,7 @@
     package="com.example.ninja">
 
     <application
+
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

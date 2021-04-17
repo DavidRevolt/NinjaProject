@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,6 +21,7 @@ public class BrowseFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         dashboardViewModel =
                 new ViewModelProvider(this).get(BrowseViewModel.class);
         View root = inflater.inflate(R.layout.fragment_browse, container, false);
@@ -31,5 +33,21 @@ public class BrowseFragment extends Fragment {
             }
         });
         return root;
+    }
+
+
+
+
+    //Action Bar Hiding
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 }
