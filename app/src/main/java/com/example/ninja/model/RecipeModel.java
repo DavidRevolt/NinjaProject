@@ -30,7 +30,17 @@ public class RecipeModel {
         void onComplete();
     }
     public void addRecipe(final Recipe recipe, final AddRecipeListener listener){
-        modelFirebase.addRecipe(recipe,listener);
+        modelFirebase.addRecipe(recipe, new AddRecipeListener() {
+            @Override
+            public void onComplete() {
+                refreshGetAllRecipes(new refreshGetAllRecipesListener() {
+                    @Override
+                    public void onComplete() {
+                        listener.onComplete();
+                    }
+                });
+            }
+        });
     }
 
 
@@ -45,11 +55,10 @@ public class RecipeModel {
 
     //
     //Get All Recipes In Firebase
-
+    LiveData<List<Recipe>> recipesList;
     public interface GetAllRecipesListener{
         void onComplete(List<Recipe> data);
     }
-    LiveData<List<Recipe>> recipesList;
     public LiveData<List<Recipe>> GetAllRecipes(){
         if (recipesList == null){
             recipesList = modelSql.getAllRecipes();

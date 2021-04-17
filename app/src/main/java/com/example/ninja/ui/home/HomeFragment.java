@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.ninja.R;
 import com.example.ninja.model.Appliance;
 import com.example.ninja.model.Recipe;
@@ -22,8 +24,9 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     RecyclerView recipeRecyclerView;
-    ProgressBar homeProgressBar;
     HomeRecipeListAdapter adapter;
+    SwipeRefreshLayout swipeRefresh;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -32,8 +35,19 @@ public class HomeFragment extends Fragment {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        homeProgressBar = root.findViewById(R.id.homeProgressBar);
-        homeProgressBar.setVisibility(View.INVISIBLE);
+
+        //Swipe2Refresh
+        swipeRefresh = root.findViewById(R.id.HomeSwipeRefresh);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefresh.setRefreshing(true);
+                refreshData();
+
+            }
+        });
+
+
 
         //List settings
         recipeRecyclerView = root.findViewById(R.id.HomeRecipeList);
@@ -43,17 +57,6 @@ public class HomeFragment extends Fragment {
 
         adapter = new HomeRecipeListAdapter(getLayoutInflater());
         adapter.data = homeViewModel.getRecipeList();
-
-
-        homeViewModel.getRecipeList().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
-            @Override
-            public void onChanged(List<Recipe> recipes) {
-                Log.d("TAG", "<<<<LIVEDATA CHANGED!>>>");
-                adapter.notifyDataSetChanged();
-            }
-        });
-        refreshData();
-        recipeRecyclerView.setAdapter(adapter);
 
         adapter.setOnClickListener(new HomeRecipeListAdapter.OnItemClickListener() {
             @Override
@@ -65,18 +68,30 @@ public class HomeFragment extends Fragment {
 
 
 
+        homeViewModel.getRecipeList().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(List<Recipe> recipes) {
+                Log.d("TAG", "<<<<NEW LIVEDATA OF RECIPE LIST TO HOME FRAGMENT!>>>");
+                adapter.notifyDataSetChanged();
+            }
+        });
+        refreshData();
+
+        recipeRecyclerView.setAdapter(adapter);
+
 
         return root;
     }
 
 
     void refreshData(){
-        Log.d("TAG", "<<<<REFRESHING>>>");
-        homeProgressBar.setVisibility(View.VISIBLE);
+        Log.d("TAG", "<<<<Home Fragment Refreshing Data>>>");
+        //homeProgressBar.setVisibility(View.VISIBLE);
         RecipeModel.instance.refreshGetAllRecipes(new RecipeModel.refreshGetAllRecipesListener() {
             @Override
             public void onComplete() {
-                homeProgressBar.setVisibility(View.INVISIBLE);
+                //homeProgressBar.setVisibility(View.INVISIBLE);
+                swipeRefresh.setRefreshing(false);
             }
         });
     }

@@ -67,7 +67,6 @@ public class RecipeModelFirebase {
                         Log.d("TAG", document.getId() + " => " + document.getData());
                         Recipe rec = new Recipe();
                         rec.fromMap(document.getData());
-                        //Recipe rec = document.toObject(Recipe.class);
                         data.add(rec);
                     }
                 }
@@ -89,7 +88,6 @@ public class RecipeModelFirebase {
                     if (doc != null) {
                         recipe = new Recipe();
                         recipe.fromMap(doc.getData());
-                        //recipe = task.getResult().toObject(Recipe.class);
                     }
                 }
                 listener.onComplete(recipe);
