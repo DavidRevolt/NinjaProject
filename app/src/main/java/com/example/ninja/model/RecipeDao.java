@@ -21,6 +21,8 @@ public interface RecipeDao {
     public void updateRecipe(Recipe... recipe);
 
     @Query("select * from Recipe")
-    LiveData<List<Recipe>> getAll();
+    public LiveData<List<Recipe>> getAll();
 
+    @Query("SELECT * FROM Recipe where Recipe.id = :id")
+    public LiveData<Recipe> getRecipe(String id);
 }

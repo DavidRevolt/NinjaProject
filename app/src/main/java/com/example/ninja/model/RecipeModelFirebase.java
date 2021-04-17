@@ -54,7 +54,7 @@ public class RecipeModelFirebase {
         addRecipe(recipe,listener);
     }
 
-    public void GetAllRecipes(long lastUpdated, RecipeModel.GetAllRecipesListener listener) {
+    public void getAllRecipes(long lastUpdated, RecipeModel.GetAllRecipesListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Timestamp ts = new Timestamp(lastUpdated,0);
         db.collection("recipes").whereGreaterThanOrEqualTo("lastUpdated",ts).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -62,7 +62,7 @@ public class RecipeModelFirebase {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<Recipe> data = new LinkedList<Recipe>();
                 if (task.isSuccessful()){
-                    Log.d("TAG", "<<<<GET ALL RECIPES FROM FIREBASE>>>");
+                    Log.d("TAG", "<<<<GET ALL RECIPES FROM Model FIREBASE>>>");
                     for (DocumentSnapshot document:task.getResult()) {
                         Log.d("TAG", document.getId() + " => " + document.getData());
                         Recipe rec = new Recipe();
@@ -94,4 +94,9 @@ public class RecipeModelFirebase {
             }
         });
     }
+
+
+
+
+
 }

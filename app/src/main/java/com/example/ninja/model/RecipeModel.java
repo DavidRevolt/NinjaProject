@@ -23,6 +23,12 @@ public class RecipeModel {
     }
     public void delRecipe(final Recipe recipe, final DelRecipeListener listener){
         modelFirebase.delRecipe(recipe,listener);
+        modelSql.delRecipe(recipe, new RecipeModelSQL.DelRecipeListener() {
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
 
@@ -33,7 +39,7 @@ public class RecipeModel {
         modelFirebase.addRecipe(recipe, new AddRecipeListener() {
             @Override
             public void onComplete() {
-                refreshGetAllRecipes(new refreshGetAllRecipesListener() {
+                refreshGetAllRecipes(new RefreshGetAllRecipesListener() {
                     @Override
                     public void onComplete() {
                         listener.onComplete();
@@ -68,14 +74,14 @@ public class RecipeModel {
     }
 
     //Refresh RecipesList^^
-    public interface refreshGetAllRecipesListener{
+    public interface RefreshGetAllRecipesListener{
         void onComplete();
     }
-    public void refreshGetAllRecipes(refreshGetAllRecipesListener listener){
+    public void refreshGetAllRecipes(RefreshGetAllRecipesListener listener){
         final SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
         long lastUpdated = sp.getLong("lastUpdatedRecipeList",0);
 
-        modelFirebase.GetAllRecipes(lastUpdated, new GetAllRecipesListener() {
+        modelFirebase.getAllRecipes(lastUpdated, new GetAllRecipesListener() {
             @Override
             public void onComplete(List<Recipe> data) {
                 long lastUp = 0;
@@ -97,18 +103,33 @@ public class RecipeModel {
 
 
     //Get Recipe
-    MutableLiveData<Recipe> recipe = new MutableLiveData<Recipe>();
+    LiveData<Recipe> recipe;
     public interface GetRecipeListener{
         void onComplete(Recipe recipe);
     }
-    public MutableLiveData<Recipe> getRecipe(String id){
+    public LiveData<Recipe> getRecipe(String id){
+        recipe = modelSql.getRecipe(id);
+
+        if (recipe == null)
+            refreshGetRecipe(id, null);
+        return recipe;
+    }
+
+
+    //Refresh Recipe^^
+    public interface RefreshGetRecipeListener{
+        void onComplete();
+    }
+    public void refreshGetRecipe(String id, RefreshGetRecipeListener listener){
         modelFirebase.getRecipe(id, new GetRecipeListener() {
             @Override
             public void onComplete(Recipe data) {
-                recipe.setValue(data);
+                modelSql.addRecipe(data,null);
+                if(listener != null) {
+                    listener.onComplete();
+                }
             }
         });
-        return recipe;
     }
 
 }

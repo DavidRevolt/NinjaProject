@@ -87,10 +87,9 @@ public class HomeFragment extends Fragment {
     void refreshData(){
         Log.d("TAG", "<<<<Home Fragment Refreshing Data>>>");
         //homeProgressBar.setVisibility(View.VISIBLE);
-        RecipeModel.instance.refreshGetAllRecipes(new RecipeModel.refreshGetAllRecipesListener() {
+        RecipeModel.instance.refreshGetAllRecipes(new RecipeModel.RefreshGetAllRecipesListener() {
             @Override
             public void onComplete() {
-                //homeProgressBar.setVisibility(View.INVISIBLE);
                 swipeRefresh.setRefreshing(false);
             }
         });
