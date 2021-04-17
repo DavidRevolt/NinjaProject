@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.example.ninja.ui.home.HomeFragment"
         android:label="Ninja Recipes"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/actionNavigationHomeToNavigationRecipe"
+            app:destination="@id/navigation_recipe" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_browse"
@@ -22,4 +26,13 @@
         android:name="com.example.ninja.ui.profile.ProfileFragment"
         android:label="My Profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/navigation_recipe"
+        android:name="com.example.ninja.ui.recipe.RecipeFragment"
+        android:label="fragment_recipe"
+        tools:layout="@layout/fragment_recipe" >
+        <argument
+            android:name="recipeID"
+            app:argType="string" />
+    </fragment>
 </navigation>

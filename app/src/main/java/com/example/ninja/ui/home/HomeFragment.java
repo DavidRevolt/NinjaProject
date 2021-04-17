@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -58,11 +59,15 @@ public class HomeFragment extends Fragment {
         adapter = new HomeRecipeListAdapter(getLayoutInflater());
         adapter.data = homeViewModel.getRecipeList();
 
+        //Nav2Recipe
         adapter.setOnClickListener(new HomeRecipeListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Log.d("TAG","row was clicked " + position);
+                String recipeID = homeViewModel.getRecipeList().getValue().get(position).getId();
+                Log.d("TAG","HomeFragment Goin 2 Recipe Fragment With ID: " + recipeID);
 
+                HomeFragmentDirections.ActionNavigationHomeToNavigationRecipe action = HomeFragmentDirections.actionNavigationHomeToNavigationRecipe(recipeID);
+                Navigation.findNavController(root).navigate(action);
             }
         });
 

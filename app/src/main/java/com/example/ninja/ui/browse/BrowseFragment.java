@@ -17,21 +17,17 @@ import com.example.ninja.R;
 
 public class BrowseFragment extends Fragment {
 
-    private BrowseViewModel dashboardViewModel;
+    private BrowseViewModel browseViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        dashboardViewModel =
-                new ViewModelProvider(this).get(BrowseViewModel.class);
+        browseViewModel = new ViewModelProvider(this).get(BrowseViewModel.class);
         View root = inflater.inflate(R.layout.fragment_browse, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
+
+
+
         return root;
     }
 
