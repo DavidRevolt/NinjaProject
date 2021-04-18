@@ -26,6 +26,12 @@ public class RecipeModel {
         modelSql.delRecipe(recipe, new RecipeModelSQL.DelRecipeListener() {
             @Override
             public void onComplete() {
+                refreshGetAllRecipes(new RefreshGetAllRecipesListener() {
+                    @Override
+                    public void onComplete() {
+                        listener.onComplete();
+                    }
+                });
 
             }
         });
@@ -54,7 +60,17 @@ public class RecipeModel {
         void onComplete();
     }
     public void updateRecipe(final Recipe recipe, final UpdateRecipeListener listener){
-        modelFirebase.updateRecipe(recipe,listener);
+        modelFirebase.updateRecipe(recipe, new UpdateRecipeListener() {
+            @Override
+            public void onComplete() {
+                refreshGetAllRecipes(new RefreshGetAllRecipesListener() {
+                    @Override
+                    public void onComplete() {
+                        listener.onComplete();
+                    }
+                });
+            }
+        });
     }
 
 

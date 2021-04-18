@@ -11,6 +11,8 @@
         android:layout_width="326dp"
         android:layout_height="258dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,13 +26,14 @@
         android:id="@+id/Home_RecipeList_Title"
         android:layout_width="324dp"
         android:layout_height="34dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center|center_vertical"
         android:text="TextView"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/Home_RecipeList_Prep"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Home_RecipeList_Img" />
 
@@ -38,39 +41,39 @@
         android:id="@+id/Home_RecipeList_Prep"
         android:layout_width="108dp"
         android:layout_height="30dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="32dp"
         android:gravity="center|center_horizontal|center_vertical"
         android:text="TextView"
         android:textAlignment="center"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/Home_RecipeList_Cook"
-        app:layout_constraintHorizontal_bias="0.97"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Home_RecipeList_Title" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/Home_RecipeList_Cook"
         android:layout_width="109dp"
         android:layout_height="30dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="108dp"
+        android:layout_marginBottom="32dp"
         android:gravity="center|center_horizontal|center_vertical"
         android:text="TextView"
         android:textAlignment="center"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/Home_RecipeList_Total"
-        app:layout_constraintTop_toBottomOf="@+id/Home_RecipeList_Title" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/Home_RecipeList_Total"
+        app:layout_constraintStart_toEndOf="@+id/Home_RecipeList_Prep" />
 
     <TextView
         android:id="@+id/Home_RecipeList_Total"
         android:layout_width="108dp"
         android:layout_height="30dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
         android:gravity="center"
         android:text="TextView"
         android:textAlignment="center"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Home_RecipeList_Title" />
 </androidx.constraintlayout.widget.ConstraintLayout>
