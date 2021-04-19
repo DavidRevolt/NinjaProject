@@ -26,15 +26,8 @@ public class CreateViewModel extends ViewModel {
         return categoryList;
     }
 
-    public void setCategoryList(LiveData<List<Category>> categoryList) {
-        this.categoryList = categoryList;
-    }
-
     public LiveData<List<Appliance>> getApplianceList() {
         return applianceList;
     }
 
-    public void setApplianceList(LiveData<List<Appliance>> applianceList) {
-        this.applianceList = applianceList;
-    }
 }

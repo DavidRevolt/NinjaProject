@@ -2,6 +2,8 @@ package com.example.ninja.model;
 
 import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
+
 import java.util.List;
 
 public class CategoryModelSQL {
@@ -77,59 +79,14 @@ public class CategoryModelSQL {
     }
 
 
-    public interface GetAllCategories{
-        void onComplete(List<Category> data);
+    public LiveData<List<Category>> getAllCategories(){
+        return AppLocalDb.db.categoryDao().getAll();
     }
-    public void GetAllCategories(final GetAllCategories listener){
-        class MyAsyncTask extends AsyncTask{
-            List<Category> data;
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                data = AppLocalDb.db.categoryDao().getAll();
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
 
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                listener.onComplete(data);
-            }
-        }
-        MyAsyncTask task = new MyAsyncTask();
-        task.execute();
+    public LiveData<Category> getCategory(String id){
+        return AppLocalDb.db.categoryDao().getCategory(id);
     }
 
 
-    public interface GetCategoryRecipesListener{
-        void onComplete(List<CategoryWithRecipes> data);
-    }
-    public void getAllCategoryRecipes(final String id, final GetCategoryRecipesListener listener){
-        class MyAsyncTask extends AsyncTask{
-            List<CategoryWithRecipes> data;
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                data = AppLocalDb.db.categoryDao().getCategoryWithRecipes(id);
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                listener.onComplete(data);
-            }
-        }
-        MyAsyncTask task = new MyAsyncTask();
-        task.execute();
-    }
 
 }

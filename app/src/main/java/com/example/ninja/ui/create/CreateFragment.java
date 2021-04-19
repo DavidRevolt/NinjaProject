@@ -1,6 +1,8 @@
 package com.example.ninja.ui.create;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
@@ -24,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -31,8 +34,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.example.ninja.R;
+import com.example.ninja.model.Category;
+import com.example.ninja.model.CategoryModel;
 import com.example.ninja.model.Recipe;
 import com.example.ninja.model.RecipeModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 public class CreateFragment extends Fragment {
@@ -45,8 +54,14 @@ public class CreateFragment extends Fragment {
     EditText cookTime;
     Button saveBtn;
     ProgressBar spinner;
-    Button category;
-    Button appliance;
+    Button categoryBtn;
+    Button applianceBtn;
+
+    String categoryId;
+    String applianceId;
+
+    public LiveData<List<Category>> categories;
+    public LiveData<List<Category>> appliances;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,8 +78,12 @@ public class CreateFragment extends Fragment {
         saveBtn = root.findViewById(R.id.Create_Recipe_Save_Button);
         spinner = root.findViewById(R.id.Create_Spinner);
         spinner.setVisibility(View.INVISIBLE);
-        category = root.findViewById(R.id.Create_Recipe_Category);
-        appliance  = root.findViewById(R.id.Create_Recipe_Appliance);
+        categoryBtn = root.findViewById(R.id.Create_Recipe_Category);
+        applianceBtn  = root.findViewById(R.id.Create_Recipe_Appliance);
+
+        categories = createViewModel.getCategoryList();
+        //appliances= createViewModel.getApplianceList();
+
 
         editImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +95,7 @@ public class CreateFragment extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(cookTime.getText().toString().isEmpty() && prepTime.getText().toString().isEmpty() && recipeName.getText().toString().isEmpty())
+                if(cookTime.getText().toString().isEmpty() || prepTime.getText().toString().isEmpty() || recipeName.getText().toString().isEmpty() || categoryId==null || applianceId==null)
                     displayMissingError();
                 else
                     saveRecipe();
@@ -84,20 +103,40 @@ public class CreateFragment extends Fragment {
             }
         });
 
+        createViewModel.getCategoryList().observe(getViewLifecycleOwner(), new Observer<List<Category>>() {
+            @Override
+            public void onChanged(List<Category> recipes) {
 
-        category.setOnClickListener(new View.OnClickListener() {
+                Log.d("TAG", "<<<<NEW LIVEDATA OF Category LIST TO Create FRAGMENT!>>>");
+
+            }
+        });
+
+        categoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final CharSequence[] items = {"Red", "Green", "Blue"};
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Choose Category")
-                        .setItems(items, new DialogInterface.OnClickListener() {
+                CategoryModel.instance.refreshGetAllCategories(new CategoryModel.RefreshGetAllCategoriesListener() {
+                    @Override
+                    public void onComplete() {
+                        AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity());
+                        builderSingle.setTitle("Select Category");
+
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_singlechoice);
+                        if(!categories.getValue().isEmpty())
+                            for(Category cat : categories.getValue())
+                                arrayAdapter.add(cat.getName());
+
+                        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                            @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // The 'which' argument contains the index position
-                                // of the selected item
+                                categoryId = categories.getValue().get(which).getId();
+                                categoryBtn.setText(categories.getValue().get(which).getName());
                             }
                         });
-                builder.show();
+                        builderSingle.show();
+                    }
+                });
+
             }
         });
 
@@ -115,9 +154,11 @@ public class CreateFragment extends Fragment {
         recipe.setCookTime(Integer.parseInt(cookTime.getText().toString()));
         recipe.setPrepTime(Integer.parseInt(prepTime.getText().toString()));
         recipe.setTitle(recipeName.getText().toString());
+        recipe.setCategoryID(categoryId);
         //TO DO
         recipe.setUserCreatorId("2");
         recipe.setId(this.toString() + recipe.getUserCreatorId());
+
 
 
         BitmapDrawable drawable = (BitmapDrawable)recipeImage.getDrawable();

@@ -52,7 +52,7 @@ public class CategoryModelFirebase {
         addCategory(category,listener);
     }
 
-    public void GetAllCategories(CategoryModel.GetAllCategoriesListener listener) {
+    public void getAllCategories(long lastUpdated,CategoryModel.GetAllCategoriesListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("categories").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -71,24 +71,6 @@ public class CategoryModelFirebase {
         });
     }
 
-    public void getAllCategoryRecipes(String id, CategoryModel.GetCategoryRecipesListener listener) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("categories").whereEqualTo("categoryID",id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<Recipe> data = new LinkedList<Recipe>();
-                if (task.isSuccessful()){
-                    for (DocumentSnapshot doc:task.getResult()) {
-                        Recipe rec = new Recipe();
-                        rec.fromMap(doc.getData());
-                        //Recipe rec = doc.toObject(Recipe.class);
-                        data.add(rec);
-                    }
-                }
-                listener.onComplete(data);
-            }
-        });
-    }
 
     public void getCategory(String id, CategoryModel.GetCategoryListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();

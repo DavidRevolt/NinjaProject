@@ -108,7 +108,7 @@ public class RecipeModel {
                         lastUp = rec.getLastUpdated();
                     }
                 }
-                sp.edit().putLong("lastUpdatedRecipes", lastUp).commit();
+                sp.edit().putLong("lastUpdatedRecipeList", lastUp).commit();
                 if(listener != null) {
                     listener.onComplete();
                 }
@@ -126,9 +126,7 @@ public class RecipeModel {
     }
     public LiveData<Recipe> getRecipe(String id){
         recipe = modelSql.getRecipe(id);
-
-        if (recipe == null)
-            refreshGetRecipe(id, null);
+        refreshGetRecipe(id, null);
         return recipe;
     }
 
