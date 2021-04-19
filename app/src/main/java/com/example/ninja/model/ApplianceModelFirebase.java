@@ -52,7 +52,7 @@ public class ApplianceModelFirebase {
         addAppliance(appliance,listener);
     }
 
-    public void GetAllAppliances(ApplianceModel.GetAllAppliancesListener listener) {
+    public void getAllAppliances(long lastUpdated,ApplianceModel.GetAllAppliancesListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("appliances").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -62,7 +62,6 @@ public class ApplianceModelFirebase {
                     for (DocumentSnapshot doc:task.getResult()) {
                         Appliance app = new Appliance();
                         app.fromMap(doc.getData());
-                        //Appliance app = doc.toObject(Appliance.class);
                         data.add(app);
                     }
                 }
@@ -71,24 +70,6 @@ public class ApplianceModelFirebase {
         });
     }
 
-    public void getAllApplianceRecipes(String id, ApplianceModel.GetApplianceRecipesListener listener) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("recipes").whereEqualTo("applianceID",id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<Recipe> data = new LinkedList<Recipe>();
-                if (task.isSuccessful()){
-                    for (DocumentSnapshot doc:task.getResult()) {
-                        Recipe rec = new Recipe();
-                        rec.fromMap(doc.getData());
-                        //Recipe rec = doc.toObject(Recipe.class);
-                        data.add(rec);
-                    }
-                }
-                listener.onComplete(data);
-            }
-        });
-    }
 
     public void getAppliance(String id, ApplianceModel.GetApplianceListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();

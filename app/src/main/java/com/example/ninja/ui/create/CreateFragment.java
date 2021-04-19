@@ -34,6 +34,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.example.ninja.R;
+import com.example.ninja.model.Appliance;
+import com.example.ninja.model.ApplianceModel;
 import com.example.ninja.model.Category;
 import com.example.ninja.model.CategoryModel;
 import com.example.ninja.model.Recipe;
@@ -61,7 +63,7 @@ public class CreateFragment extends Fragment {
     String applianceId;
 
     public LiveData<List<Category>> categories;
-    public LiveData<List<Category>> appliances;
+    public LiveData<List<Appliance>> appliances;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -81,8 +83,11 @@ public class CreateFragment extends Fragment {
         categoryBtn = root.findViewById(R.id.Create_Recipe_Category);
         applianceBtn  = root.findViewById(R.id.Create_Recipe_Appliance);
 
+        appliances= createViewModel.getApplianceList();
+        List<Appliance> test = appliances.getValue();
         categories = createViewModel.getCategoryList();
-        //appliances= createViewModel.getApplianceList();
+
+
 
 
         editImage.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +108,9 @@ public class CreateFragment extends Fragment {
             }
         });
 
+
+
+        //CATEGORY BUTTON
         createViewModel.getCategoryList().observe(getViewLifecycleOwner(), new Observer<List<Category>>() {
             @Override
             public void onChanged(List<Category> recipes) {
@@ -112,36 +120,77 @@ public class CreateFragment extends Fragment {
             }
         });
 
+
         categoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                spinner.setVisibility(View.VISIBLE);
                 CategoryModel.instance.refreshGetAllCategories(new CategoryModel.RefreshGetAllCategoriesListener() {
                     @Override
                     public void onComplete() {
-                        AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity());
-                        builderSingle.setTitle("Select Category");
-
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_singlechoice);
                         if(!categories.getValue().isEmpty())
+                        {
+                            AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity());
+                            builderSingle.setTitle("Select Category");
+
+                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_singlechoice);
                             for(Category cat : categories.getValue())
                                 arrayAdapter.add(cat.getName());
 
-                        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                categoryId = categories.getValue().get(which).getId();
-                                categoryBtn.setText(categories.getValue().get(which).getName());
-                            }
-                        });
-                        builderSingle.show();
+                            builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    categoryId = categories.getValue().get(which).getId();
+                                    categoryBtn.setText(categories.getValue().get(which).getName());
+                                }
+                            });
+                            builderSingle.show();
+                        }
+                        spinner.setVisibility(View.INVISIBLE);
                     }
                 });
+            }
+        });
+
+        //Appliance Button
+        createViewModel.getApplianceList().observe(getViewLifecycleOwner(), new Observer<List<Appliance>>() {
+            @Override
+            public void onChanged(List<Appliance> recipes) {
+                Log.d("TAG", "<<<<NEW LIVEDATA OF Appliance LIST TO Create FRAGMENT!>>>");
 
             }
         });
 
+        applianceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                spinner.setVisibility(View.VISIBLE);
+                ApplianceModel.instance.refreshGetAllAppliances(new ApplianceModel.RefreshGetAllAppliancesListener() {
+                    @Override
+                    public void onComplete() {
+                        if(!appliances.getValue().isEmpty())
+                        {
+                            AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity());
+                            builderSingle.setTitle("Select Appliance");
+                            ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_singlechoice);
 
+                            for(Appliance app : appliances.getValue())
+                                arrayAdapter2.add(app.getName());
 
+                            builderSingle.setAdapter(arrayAdapter2, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    applianceId = appliances.getValue().get(which).getId();
+                                    applianceBtn.setText(appliances.getValue().get(which).getName());
+                                }
+                            });
+                            builderSingle.show();
+                        }
+                        spinner.setVisibility(View.INVISIBLE);
+                    }
+                });
+            }
+        });
         return root;
     }
 
@@ -155,6 +204,7 @@ public class CreateFragment extends Fragment {
         recipe.setPrepTime(Integer.parseInt(prepTime.getText().toString()));
         recipe.setTitle(recipeName.getText().toString());
         recipe.setCategoryID(categoryId);
+        recipe.setApplianceID(applianceId);
         //TO DO
         recipe.setUserCreatorId("2");
         recipe.setId(this.toString() + recipe.getUserCreatorId());

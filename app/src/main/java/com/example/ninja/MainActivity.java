@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 
+import com.example.ninja.model.Appliance;
+import com.example.ninja.model.ApplianceModel;
 import com.example.ninja.model.Category;
 import com.example.ninja.model.CategoryModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,18 +32,6 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-
-
-        Category cat1 = new Category();
-        cat1.setId("2");
-        cat1.setName("Breakfast");
-        CategoryModel.instance.addCategory(cat1, new CategoryModel.AddCategoryListener() {
-            @Override
-            public void onComplete() {
-
-            }
-        });
-
 
     }
 

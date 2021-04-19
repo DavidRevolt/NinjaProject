@@ -96,7 +96,6 @@ public class CategoryModel {
         void onComplete();
     }
 
-
     public void refreshGetAllCategories(RefreshGetAllCategoriesListener listener){
         final SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
         long lastUpdated = sp.getLong("lastUpdatedCategoryList",0);

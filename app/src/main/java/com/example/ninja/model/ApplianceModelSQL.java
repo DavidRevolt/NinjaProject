@@ -2,6 +2,8 @@ package com.example.ninja.model;
 
 import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
+
 import java.util.List;
 
 public class ApplianceModelSQL {
@@ -77,59 +79,11 @@ public class ApplianceModelSQL {
     }
 
 
-    public interface GetAllAppliances{
-        void onComplete(List<Appliance> data);
-    }
-    public void GetAllAppliances(final GetAllAppliances listener){
-        class MyAsyncTask extends AsyncTask{
-            List<Appliance> data;
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                data = AppLocalDb.db.applianceDao().getAll();
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                listener.onComplete(data);
-            }
-        }
-        MyAsyncTask task = new MyAsyncTask();
-        task.execute();
+    public LiveData<List<Appliance>> getAllAppliances(){
+        return AppLocalDb.db.applianceDao().getAll();
     }
 
-
-    public interface GetApplianceRecipesListener{
-        void onComplete(List<ApplianceWithRecipes> data);
+    public LiveData<Appliance> getAppliance(String id){
+        return AppLocalDb.db.applianceDao().getAppliance(id);
     }
-    public void getAllApplianceRecipes(final String id, final GetApplianceRecipesListener listener){
-        class MyAsyncTask extends AsyncTask{
-            List<ApplianceWithRecipes> data;
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                data = AppLocalDb.db.applianceDao().getApplianceWithRecipes(id);
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                listener.onComplete(data);
-            }
-        }
-        MyAsyncTask task = new MyAsyncTask();
-        task.execute();
-    }
-
 }

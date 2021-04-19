@@ -1,18 +1,21 @@
 package com.example.ninja.model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.example.ninja.MyApplication;
 
 import java.util.List;
 
 public class ApplianceModel {
     public final static ApplianceModel instance = new ApplianceModel();
     private ApplianceModel(){}
-
     ApplianceModelFirebase modelFirebase = new ApplianceModelFirebase();
     ApplianceModelSQL modelSql = new ApplianceModelSQL();
-
 
 
     public interface DelApplianceListener{
@@ -20,6 +23,18 @@ public class ApplianceModel {
     }
     public void delAppliance(final Appliance appliance, final DelApplianceListener listener){
         modelFirebase.delAppliance(appliance,listener);
+        modelSql.delAppliance(appliance, new ApplianceModelSQL.DelApplianceListener() {
+            @Override
+            public void onComplete() {
+                refreshGetAllAppliances(new ApplianceModel.RefreshGetAllAppliancesListener() {
+                    @Override
+                    public void onComplete() {
+                        listener.onComplete();
+                    }
+                });
+
+            }
+        });
     }
 
 
@@ -29,7 +44,17 @@ public class ApplianceModel {
         void onComplete();
     }
     public void addAppliance(final Appliance appliance, final AddApplianceListener listener){
-        modelFirebase.addAppliance(appliance,listener);
+        modelFirebase.addAppliance(appliance, new ApplianceModel.AddApplianceListener() {
+            @Override
+            public void onComplete() {
+                refreshGetAllAppliances(new ApplianceModel.RefreshGetAllAppliancesListener(){
+                    @Override
+                    public void onComplete() {
+                        listener.onComplete();
+                    }
+                });
+            }
+        });
     }
 
 
@@ -38,78 +63,94 @@ public class ApplianceModel {
         void onComplete();
     }
     public void updateAppliance(final Appliance appliance, final UpdateApplianceListener listener){
-        modelFirebase.updateAppliance(appliance,listener);
+        modelFirebase.updateAppliance(appliance, new ApplianceModel.UpdateApplianceListener() {
+            @Override
+            public void onComplete() {
+                refreshGetAllAppliances(new ApplianceModel.RefreshGetAllAppliancesListener() {
+                    @Override
+                    public void onComplete() {
+                        listener.onComplete();
+                    }
+                });
+            }
+        });
     }
 
 
 
 
 
-    //GET ALL Appliances
-    MutableLiveData<List<Appliance>> appliancesList = new MutableLiveData<List<Appliance>>();
-    public interface GetAllAppliancesListener{
+    //GET ALL Appliance
+    LiveData<List<Appliance>> AppliancesList;
+    public interface GetAllAppliancesListener {
         void onComplete(List<Appliance> data);
     }
-    public MutableLiveData<List<Appliance>> GetAllAppliances( ){
-        return appliancesList;
+    public LiveData<List<Appliance>> GetAllAppliances(){
+        if (AppliancesList == null){
+            AppliancesList = modelSql.getAllAppliances();
+            refreshGetAllAppliances(null);
+        }
+        return AppliancesList;
     }
+
 
     //Refresh AppliancesList^^
-    public interface refreshGetAllAppliancesListener{
+    public interface RefreshGetAllAppliancesListener{
         void onComplete();
     }
-    public void refreshGetAllAppliances(refreshGetAllAppliancesListener listener){
-        modelFirebase.GetAllAppliances(new GetAllAppliancesListener() {
+
+
+    public void refreshGetAllAppliances(RefreshGetAllAppliancesListener listener){
+        final SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
+        long lastUpdated = sp.getLong("lastUpAppList",0);
+
+        modelFirebase.getAllAppliances(lastUpdated, new GetAllAppliancesListener() {
             @Override
             public void onComplete(List<Appliance> data) {
-                appliancesList.setValue(data);
-                listener.onComplete();
+                long lastUp = 0;
+                for (Appliance rec: data) {
+                    modelSql.addAppliance(rec,null);
+                    if (rec.getLastUpdated()>lastUp){
+                        lastUp = rec.getLastUpdated();
+                    }
+                }
+                sp.edit().putLong("lastUpAppList", lastUp).commit();
+                if(listener != null) {
+                    listener.onComplete();
+                }
             }
         });
     }
 
-
-
-
-    //GET ALL Appliance Recipes
-    MutableLiveData<List<Recipe>> applianceRecipes = new MutableLiveData<List<Recipe>>();
-    public interface GetApplianceRecipesListener{
-        void onComplete(List<Recipe> data);
-    }
-    public MutableLiveData<List<Recipe>> getAllApplianceRecipes(final String id){
-        return applianceRecipes;
-    }
-
-    //Refresh AplianceRecipes^^
-    public interface refreshGetAllApplianceRecipesListener{
-        void onComplete();
-    }
-    public void refreshGetAllUsers(String id , refreshGetAllApplianceRecipesListener listener){
-        modelFirebase.getAllApplianceRecipes(id,new GetApplianceRecipesListener() {
-            @Override
-            public void onComplete(List<Recipe> data) {
-                applianceRecipes.setValue(data);
-                listener.onComplete();
-            }
-        });
-    }
 
 
 
 
 
     //GET APPLIANCE
-    MutableLiveData<Appliance> appliance = new MutableLiveData<Appliance>();
+    LiveData<Appliance> appliance;
     public interface GetApplianceListener{
         void onComplete(Appliance appliance);
     }
-    public MutableLiveData<Appliance> getAppliance(String id){
+    public LiveData<Appliance> getAppliance(String id){
+        appliance = modelSql.getAppliance(id);
+        refreshGetAppliance(id, null);
+        return appliance;
+    }
+
+    //Refresh Category^^
+    public interface RefreshGetApplianceListener{
+        void onComplete();
+    }
+    public void refreshGetAppliance(String id, RefreshGetApplianceListener listener){
         modelFirebase.getAppliance(id, new GetApplianceListener() {
             @Override
             public void onComplete(Appliance data) {
-                appliance.setValue(data);
+                modelSql.addAppliance(data,null);
+                if(listener != null) {
+                    listener.onComplete();
+                }
             }
         });
-        return appliance;
     }
 }

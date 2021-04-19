@@ -62,7 +62,6 @@ public class CategoryModelFirebase {
                     for (DocumentSnapshot doc:task.getResult()) {
                         Category cat = new Category();
                         cat.fromMap(doc.getData());
-                        //Category cat = doc.toObject(Category.class);
                         data.add(cat);
                     }
                 }
