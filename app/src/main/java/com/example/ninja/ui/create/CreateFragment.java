@@ -45,6 +45,9 @@ public class CreateFragment extends Fragment {
     EditText cookTime;
     Button saveBtn;
     ProgressBar spinner;
+    Button category;
+    Button appliance;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -60,6 +63,8 @@ public class CreateFragment extends Fragment {
         saveBtn = root.findViewById(R.id.Create_Recipe_Save_Button);
         spinner = root.findViewById(R.id.Create_Spinner);
         spinner.setVisibility(View.INVISIBLE);
+        category = root.findViewById(R.id.Create_Recipe_Category);
+        appliance  = root.findViewById(R.id.Create_Recipe_Appliance);
 
         editImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +83,25 @@ public class CreateFragment extends Fragment {
 
             }
         });
+
+
+        category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final CharSequence[] items = {"Red", "Green", "Blue"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Choose Category")
+                        .setItems(items, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // The 'which' argument contains the index position
+                                // of the selected item
+                            }
+                        });
+                builder.show();
+            }
+        });
+
+
 
         return root;
     }

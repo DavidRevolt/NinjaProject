@@ -58,6 +58,32 @@
             app:layout_constraintStart_toEndOf="@+id/Create_Recipe_Prep_Time"
             app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Name" />
 
+        <Button
+            android:id="@+id/Create_Recipe_Appliance"
+            android:layout_width="173dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="64dp"
+            android:hint="Appliance"
+            app:backgroundTint="#4CAF50"
+            app:layout_constraintEnd_toStartOf="@+id/Create_Recipe_Cook_Time"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Name" />
+
+        <Button
+            android:id="@+id/Create_Recipe_Category"
+            android:layout_width="173dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Category"
+            app:backgroundTint="#4CAF50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/Create_Recipe_Prep_Time"
+            app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Name" />
+
         <ImageView
             android:id="@+id/Create_Recipe_Img"
             android:layout_width="0dp"
@@ -119,28 +145,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.552" />
 
-        <Button
-            android:id="@+id/Create_Recipe_Category"
-            android:layout_width="173dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:hint="Category"
-            app:backgroundTint="#4CAF50"
-            app:layout_constraintEnd_toStartOf="@+id/Create_Recipe_Appliance"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Prep_Time" />
 
-        <Button
-            android:id="@+id/Create_Recipe_Appliance"
-            android:layout_width="173dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="52dp"
-            android:hint="Appliance"
-            app:backgroundTint="#4CAF50"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Cook_Time" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
