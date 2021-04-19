@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -66,8 +67,8 @@ public class HomeFragment extends Fragment {
                 String recipeID = homeViewModel.getRecipeList().getValue().get(position).getId();
                 Log.d("TAG","HomeFragment Goin 2 Recipe Fragment With ID: " + recipeID);
 
-                HomeFragmentDirections.ActionNavigationHomeToNavigationRecipe action = HomeFragmentDirections.actionNavigationHomeToNavigationRecipe(recipeID);
-                Navigation.findNavController(root).navigate(action);
+                //HomeFragmentDirections.ActionNavigationHomeToNavigationRecipe action = HomeFragmentDirections.actionNavigationHomeToNavigationRecipe(recipeID);
+                Navigation.findNavController(root).navigate(HomeFragmentDirections.actionGlobalNavigationRecipe(recipeID));
             }
         });
 
@@ -103,5 +104,5 @@ public class HomeFragment extends Fragment {
 
 
 
-
 }
+

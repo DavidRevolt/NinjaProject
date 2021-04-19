@@ -35,4 +35,15 @@
             android:name="recipeID"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_create"
+        android:name="com.example.ninja.ui.create.CreateFragment"
+        android:label="fragment_create"
+        tools:layout="@layout/fragment_create" />
+    <action android:id="@+id/action_global_navigation_recipe" app:destination="@id/navigation_recipe" />
+    <fragment
+        android:id="@+id/navigation_myFavorites"
+        android:name="com.example.ninja.ui.myfavorites.MyFavoritesFragment"
+        android:label="My Favorites"
+        tools:layout="@layout/fragment_my_favorites" />
 </navigation>
