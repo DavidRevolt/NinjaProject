@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ninja.R;
 import com.example.ninja.model.Recipe;
+import com.squareup.picasso.Picasso;
 
 public class HomeRecipeListViewHolder extends RecyclerView.ViewHolder {
     //layout members
@@ -44,7 +45,11 @@ public class HomeRecipeListViewHolder extends RecyclerView.ViewHolder {
         prepTime.setText(String.valueOf(recipe.getPrepTime()));
         cookTime.setText(String.valueOf(recipe.getCookTime()));
         totalTime.setText(String.valueOf(recipe.getCookTime() + recipe.getPrepTime()));
-        //recipeImg.
+
+        recipeImg.setImageResource(R.drawable.plate);
+        if (recipe.getImgURL() != null)
+            Picasso.get().load(recipe.getImgURL()).placeholder(R.drawable.plate).into(recipeImg);
+
 
         this.position = position;
     }

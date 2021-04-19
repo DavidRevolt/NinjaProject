@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/navigation_create"
         android:name="com.example.ninja.ui.create.CreateFragment"
-        android:label="fragment_create"
+        android:label="Create New Recipe"
         tools:layout="@layout/fragment_create" />
     <action android:id="@+id/action_global_navigation_recipe" app:destination="@id/navigation_recipe" />
     <fragment

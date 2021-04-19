@@ -2,6 +2,7 @@ package com.example.ninja.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -148,4 +149,13 @@ public class RecipeModel {
         });
     }
 
+
+
+    public interface UploadImageListener{
+        void onComplete(String url);
+    }
+
+    public void uploadImage(Bitmap imageBmp, String name, final UploadImageListener listener) {
+        modelFirebase.uploadImage(imageBmp, name, listener);
+    }
 }

@@ -12,10 +12,8 @@
     tools:context=".ui.create.CreateFragment">
 
 
-
-
     <EditText
-        android:id="@+id/CreateRecipeInstructions"
+        android:id="@+id/Create_Recipe_Instructions"
         android:layout_width="358dp"
         android:layout_height="241dp"
         android:layout_marginStart="16dp"
@@ -23,14 +21,14 @@
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="Instructions"
-        android:inputType="numberSigned|textPersonName"
+        android:inputType="textPersonName|numberSigned"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CreateRecipeName" />
+        app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Name" />
 
     <EditText
-        android:id="@+id/CreateRecipePrepTime"
+        android:id="@+id/Create_Recipe_Prep_Time"
         android:layout_width="173dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -39,13 +37,13 @@
         android:hint="Prep Time(minutes)"
         android:inputType="numberSigned|textPersonName"
         android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/CreateRecipeCookTime"
+        app:layout_constraintEnd_toStartOf="@+id/Create_Recipe_Cook_Time"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CreateRecipeName" />
+        app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Name" />
 
     <EditText
-        android:id="@+id/CreateRecipeCookTime"
+        android:id="@+id/Create_Recipe_Cook_Time"
         android:layout_width="173dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -56,11 +54,11 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/CreateRecipePrepTime"
-        app:layout_constraintTop_toBottomOf="@+id/CreateRecipeName" />
+        app:layout_constraintStart_toEndOf="@+id/Create_Recipe_Prep_Time"
+        app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Name" />
 
     <ImageView
-        android:id="@+id/CreateImg"
+        android:id="@+id/Create_Recipe_Img"
         android:layout_width="0dp"
         android:layout_height="294dp"
         android:layout_marginStart="16dp"
@@ -73,16 +71,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/UploadImgButton"
+        android:id="@+id/Create_Edit_Img_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#00FFFFFF"
         android:src="@android:drawable/ic_menu_edit"
-        app:layout_constraintBottom_toBottomOf="@+id/CreateImg"
-        app:layout_constraintEnd_toEndOf="@+id/CreateImg" />
+        app:layout_constraintBottom_toBottomOf="@+id/Create_Recipe_Img"
+        app:layout_constraintEnd_toEndOf="@+id/Create_Recipe_Img" />
 
     <EditText
-        android:id="@+id/CreateRecipeName"
+        android:id="@+id/Create_Recipe_Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -94,17 +92,17 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CreateImg" />
+        app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Img" />
 
     <Button
-        android:id="@+id/CreatRecipeSaveButton"
+        android:id="@+id/Create_Recipe_Save_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="bon appétit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CreateRecipeInstructions" />
+        app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Instructions" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
