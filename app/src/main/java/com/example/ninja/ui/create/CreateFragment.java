@@ -40,6 +40,8 @@ import com.example.ninja.model.Category;
 import com.example.ninja.model.CategoryModel;
 import com.example.ninja.model.Recipe;
 import com.example.ninja.model.RecipeModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +63,7 @@ public class CreateFragment extends Fragment {
 
     String categoryId;
     String applianceId;
-
+    FirebaseUser user;
     public LiveData<List<Category>> categories;
     public LiveData<List<Appliance>> appliances;
 
@@ -72,6 +74,7 @@ public class CreateFragment extends Fragment {
         View root =  inflater.inflate(R.layout.fragment_create, container, false);
         Log.d("TAG","in CreateFragment");
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
         recipeImage = root.findViewById(R.id.Create_Recipe_Img);
         editImage = root.findViewById(R.id.Create_Edit_Img_Button);
         recipeName = root.findViewById(R.id.Create_Recipe_Name);
@@ -206,7 +209,8 @@ public class CreateFragment extends Fragment {
         recipe.setCategoryID(categoryId);
         recipe.setApplianceID(applianceId);
         //TO DO
-        recipe.setUserCreatorId("2");
+
+        recipe.setUserCreatorId(user.getUid());
         recipe.setId(this.toString() + recipe.getUserCreatorId());
 
 

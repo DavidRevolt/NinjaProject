@@ -19,6 +19,7 @@
             android:id="@+id/HomeRecipeList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:foregroundGravity="clip_horizontal"
             tools:layout_editor_absoluteX="131dp"
             tools:layout_editor_absoluteY="110dp" />
 

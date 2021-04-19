@@ -2,12 +2,8 @@ package com.example.ninja;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
 
-import com.example.ninja.model.Appliance;
-import com.example.ninja.model.ApplianceModel;
-import com.example.ninja.model.Category;
-import com.example.ninja.model.CategoryModel;
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +11,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     NavController navController;
@@ -36,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
+
+
     //Navigate Back Button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -45,4 +48,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
