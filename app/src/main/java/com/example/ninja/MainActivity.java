@@ -2,6 +2,7 @@ package com.example.ninja;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -13,6 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity {
     NavController navController;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -16,6 +16,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -27,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.example.ninja.R;
 import com.example.ninja.model.Recipe;
@@ -42,7 +44,7 @@ public class CreateFragment extends Fragment {
     EditText prepTime;
     EditText cookTime;
     Button saveBtn;
-
+    ProgressBar spinner;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -56,7 +58,8 @@ public class CreateFragment extends Fragment {
         prepTime = root.findViewById(R.id.Create_Recipe_Prep_Time);
         cookTime = root.findViewById(R.id.Create_Recipe_Cook_Time);
         saveBtn = root.findViewById(R.id.Create_Recipe_Save_Button);
-
+        spinner = root.findViewById(R.id.Create_Spinner);
+        spinner.setVisibility(View.INVISIBLE);
 
         editImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +71,6 @@ public class CreateFragment extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if(cookTime.getText().toString().isEmpty() && prepTime.getText().toString().isEmpty() && recipeName.getText().toString().isEmpty())
                     displayMissingError();
                 else
@@ -84,6 +86,7 @@ public class CreateFragment extends Fragment {
 
 
     private void saveRecipe() {
+        spinner.setVisibility(View.VISIBLE);
         final Recipe recipe= new Recipe();
         recipe.setCookTime(Integer.parseInt(cookTime.getText().toString()));
         recipe.setPrepTime(Integer.parseInt(prepTime.getText().toString()));
@@ -107,6 +110,7 @@ public class CreateFragment extends Fragment {
                     RecipeModel.instance.addRecipe(recipe, new RecipeModel.AddRecipeListener() {
                         @Override
                         public void onComplete() {
+                            spinner.setVisibility(View.INVISIBLE);
                             Navigation.findNavController(saveBtn).popBackStack();
                         }
                     });
