@@ -6,115 +6,142 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.create.CreateFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.create.CreateFragment">
 
 
-    <EditText
-        android:id="@+id/Create_Recipe_Instructions"
-        android:layout_width="358dp"
-        android:layout_height="241dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:hint="Instructions"
-        android:inputType="textLongMessage|textPersonName|text"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Name" />
+        <EditText
+            android:id="@+id/Create_Recipe_Instructions"
+            android:layout_width="358dp"
+            android:layout_height="241dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:hint="Instructions"
+            android:inputType="textLongMessage|textPersonName|text"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/Create_Recipe_Save_Button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Create_Spinner" />
 
-    <EditText
-        android:id="@+id/Create_Recipe_Prep_Time"
-        android:layout_width="173dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Prep Time(minutes)"
-        android:inputType="numberSigned|textPersonName"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/Create_Recipe_Cook_Time"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Name" />
+        <EditText
+            android:id="@+id/Create_Recipe_Prep_Time"
+            android:layout_width="173dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Prep Time(minutes)"
+            android:inputType="numberSigned|textPersonName"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toStartOf="@+id/Create_Recipe_Cook_Time"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Name" />
 
-    <EditText
-        android:id="@+id/Create_Recipe_Cook_Time"
-        android:layout_width="173dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:hint="Cook Time(minutes)"
-        android:inputType="numberSigned|textPersonName"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/Create_Recipe_Prep_Time"
-        app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Name" />
+        <EditText
+            android:id="@+id/Create_Recipe_Cook_Time"
+            android:layout_width="173dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:hint="Cook Time(minutes)"
+            android:inputType="numberSigned|textPersonName"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/Create_Recipe_Prep_Time"
+            app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Name" />
 
-    <ImageView
-        android:id="@+id/Create_Recipe_Img"
-        android:layout_width="0dp"
-        android:layout_height="294dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="#FFFFFF"
-        android:src="@drawable/plate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/Create_Recipe_Img"
+            android:layout_width="0dp"
+            android:layout_height="294dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="#FFFFFF"
+            android:src="@drawable/plate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/Create_Edit_Img_Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#00FFFFFF"
-        android:src="@android:drawable/ic_menu_edit"
-        app:layout_constraintBottom_toBottomOf="@+id/Create_Recipe_Img"
-        app:layout_constraintEnd_toEndOf="@+id/Create_Recipe_Img" />
+        <ImageButton
+            android:id="@+id/Create_Edit_Img_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:src="@android:drawable/ic_menu_edit"
+            app:layout_constraintBottom_toBottomOf="@+id/Create_Recipe_Img"
+            app:layout_constraintEnd_toEndOf="@+id/Create_Recipe_Img" />
 
-    <EditText
-        android:id="@+id/Create_Recipe_Name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:hint="Recipe Name"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Img" />
+        <EditText
+            android:id="@+id/Create_Recipe_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:hint="Recipe Name"
+            android:inputType="textPersonName"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Img" />
 
-    <Button
-        android:id="@+id/Create_Recipe_Save_Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="bon appétit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Instructions" />
+        <Button
+            android:id="@+id/Create_Recipe_Save_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="bon appétit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Instructions" />
 
-    <ProgressBar
-        android:id="@+id/Create_Spinner"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.552" />
+        <ProgressBar
+            android:id="@+id/Create_Spinner"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.552" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/Create_Recipe_Category"
+            android:layout_width="173dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="Category"
+            app:backgroundTint="#4CAF50"
+            app:layout_constraintEnd_toStartOf="@+id/Create_Recipe_Appliance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Prep_Time" />
+
+        <Button
+            android:id="@+id/Create_Recipe_Appliance"
+            android:layout_width="173dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="52dp"
+            android:hint="Appliance"
+            app:backgroundTint="#4CAF50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Cook_Time" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

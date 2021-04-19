@@ -1,7 +1,40 @@
 package com.example.ninja.ui.create;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.ninja.model.Appliance;
+import com.example.ninja.model.ApplianceModel;
+import com.example.ninja.model.Category;
+import com.example.ninja.model.CategoryModel;
+import com.example.ninja.model.Recipe;
+import com.example.ninja.model.RecipeModel;
+
+import java.util.List;
+
 public class CreateViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
+    private LiveData<List<Category>> categoryList;
+    private LiveData<List<Appliance>> applianceList;
+
+
+    public CreateViewModel() {
+        categoryList = CategoryModel.instance.GetAllCategories();
+        applianceList = ApplianceModel.instance.GetAllAppliances();
+    }
+
+    public LiveData<List<Category>> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(LiveData<List<Category>> categoryList) {
+        this.categoryList = categoryList;
+    }
+
+    public LiveData<List<Appliance>> getApplianceList() {
+        return applianceList;
+    }
+
+    public void setApplianceList(LiveData<List<Appliance>> applianceList) {
+        this.applianceList = applianceList;
+    }
 }
