@@ -27,7 +27,7 @@ public class Recipe {
     private int cookTime;
     private int totalTime;
     private int likesCounter;
-    private String creationDate;
+    private String instructions;
 
     private String applianceID;
     private String categoryID;
@@ -43,7 +43,7 @@ public class Recipe {
         result.put("cookTime", cookTime);
         result.put("totalTime", cookTime+prepTime);
         result.put("likesCounter", likesCounter);
-        result.put("creationDate", creationDate);
+        result.put("instructions", instructions);
         result.put("applianceID", applianceID);
         result.put("categoryID", categoryID);
         result.put("lastUpdated", FieldValue.serverTimestamp());
@@ -59,7 +59,7 @@ public class Recipe {
         cookTime = (int)(long)map.get("cookTime");
         totalTime = (int)(long)map.get("totalTime");
         likesCounter = (int)(long)map.get("likesCounter");
-        creationDate = (String)map.get("creationDate");
+        instructions = (String)map.get("instructions");
         applianceID = (String)map.get("applianceID");
         categoryID = (String)map.get("categoryID");
         Timestamp ts = (Timestamp) map.get("lastUpdated");
@@ -140,12 +140,12 @@ public class Recipe {
         this.cookTime = cookTime;
     }
 
-    public String getCreationDate() {
-        return creationDate;
+    public String getInstructions() {
+        return instructions;
     }
 
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
     }
 
     public Long getLastUpdated() {
