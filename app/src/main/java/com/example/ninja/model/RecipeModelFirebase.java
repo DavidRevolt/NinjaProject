@@ -68,12 +68,13 @@ public class RecipeModelFirebase {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<Recipe> data = new LinkedList<Recipe>();
                 if (task.isSuccessful()){
-                    Log.d("TAG", "<<<<GET ALL RECIPES FROM Model FIREBASE>>>");
+                    Log.d("TAG", "<<<<GET ALL RECIPES FROM FIREBASE>>>");
                     for (DocumentSnapshot document:task.getResult()) {
-                        Log.d("TAG", document.getId() + " => " + document.getData());
                         Recipe rec = new Recipe();
                         rec.fromMap(document.getData());
                         data.add(rec);
+                        //Log.d("TAG", document.getId() + " => " + document.getData());
+                        Log.d("TAG", "From Firebase =>  " + rec.getTitle());
                     }
                 }
                 listener.onComplete(data);

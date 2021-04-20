@@ -1,6 +1,7 @@
 package com.example.ninja.model;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -40,6 +41,7 @@ public class RecipeModelSQL {
             @Override
             protected Object doInBackground(Object[] objects) {
                 AppLocalDb.db.recipeDao().insertAll(recipe);
+                Log.d("TAG", "Recipe: " + recipe.getTitle()+ " => " + "ADDED 2 ROOM");
                 return null;
             }
 
