@@ -44,4 +44,5 @@ public class RecipeViewModel extends ViewModel {
         this.id = id;
         recipe = RecipeModel.instance.getRecipe(id);
     }
+
 }

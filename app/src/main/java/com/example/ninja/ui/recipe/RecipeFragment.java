@@ -1,13 +1,17 @@
 package com.example.ninja.ui.recipe;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
@@ -16,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.ninja.R;
@@ -51,7 +56,8 @@ public class RecipeFragment extends Fragment {
     Button editBtn;
     Button deleteBtn;
     SwipeRefreshLayout swipeRefresh;
-
+    ProgressBar spinner;
+    Recipe recipe;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -65,7 +71,7 @@ public class RecipeFragment extends Fragment {
         Log.d("TAG","in RecipeFragment , Recipe ID:  " + recipeID);
 
 
-
+        spinner = root.findViewById(R.id.RecipeFragment_Spinner);
         recipeImg = root.findViewById(R.id.RecipeFragm_Img);
         recipeName = root.findViewById(R.id.RecipeFragm_Recipe_Name);
         prepTime = root.findViewById(R.id.RecipeFragm_Prep_Time);
@@ -80,6 +86,35 @@ public class RecipeFragment extends Fragment {
         swipeRefresh = root.findViewById(R.id.RecipeFragm_SwipeRefresh);
         editBtn.setVisibility(View.INVISIBLE);
         deleteBtn.setVisibility(View.INVISIBLE);
+        spinner.setVisibility(View.INVISIBLE);
+
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Are you sure?")
+                        .setPositiveButton("Yep...", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                spinner.setVisibility(View.VISIBLE);
+                                Navigation.findNavController(view)
+                                        .popBackStack(R.id.navigation_home,false);
+                                RecipeModel.instance.delRecipe(recipe, new RecipeModel.DelRecipeListener() {
+                                    @Override
+                                    public void onComplete() {
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("NO!", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User cancelled the dialog
+                            }
+                        });
+
+                builder.create();
+                builder.show();
+            }});
 
 
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -124,7 +159,7 @@ public class RecipeFragment extends Fragment {
         RecipeModel.instance.refreshGetRecipe(recipeID, new RecipeModel.RefreshGetRecipeListener() {
             @Override
             public void onComplete() {
-                Recipe recipe = recipeViewModel.getRecipe().getValue();
+                recipe = recipeViewModel.getRecipe().getValue();
 
                 CategoryModel.instance.refreshGetAllCategories(new CategoryModel.RefreshGetAllCategoriesListener() {
                     @Override
@@ -154,13 +189,16 @@ public class RecipeFragment extends Fragment {
 
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 String currentUserEmail = user.getEmail();
-                if(recipe.getUserCreatorId() == currentUserEmail){
+                if(recipe.getUserCreatorId().equals(currentUserEmail)){
+                    madeBy.setVisibility(View.INVISIBLE);
                     editBtn.setVisibility(View.VISIBLE);;
                     deleteBtn.setVisibility(View.VISIBLE);;
                 }
                 else
                 madeBy.append(recipe.getUserCreatorId());
                 swipeRefresh.setRefreshing(false);
+
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(recipe.getTitle());
             }
         });
     }
