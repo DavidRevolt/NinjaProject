@@ -8,6 +8,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ninja.MyApplication;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.util.Listener;
 
 import java.util.List;
@@ -148,7 +150,49 @@ public class RecipeModel {
     }
 
 
+    //
+    //Get All User Recipes In Firebase
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();;
+    LiveData<List<Recipe>> userRecipesList;
+    public interface GetAllUserRecipesListener{
+        void onComplete(List<Recipe> data);
+    }
+    public LiveData<List<Recipe>> GetAllUserRecipes(){
+        if (userRecipesList == null){
+            userRecipesList = modelSql.getAllUserRecipes(user.getUid());
+            refreshGetAllUserRecipes(null);
+        }
+        return recipesList;
+    }
 
+    //Refresh UserRecipesList^^
+    public interface RefreshGetAllUserRecipesListener{
+        void onComplete();
+    }
+    public void refreshGetAllUserRecipes(RefreshGetAllUserRecipesListener listener){
+        final SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
+        long lastUpdated = sp.getLong("lastUpdatedUserRecipeList",0);
+
+        modelFirebase.getAllUserRecipes(lastUpdated,user.getUid(), new GetAllUserRecipesListener() {
+            @Override
+            public void onComplete(List<Recipe> data) {
+                long lastUp = 0;
+                for (Recipe rec: data) {
+                    modelSql.addRecipe(rec,null);
+                    if (rec.getLastUpdated()>lastUp){
+                        lastUp = rec.getLastUpdated();
+                    }
+                }
+                sp.edit().putLong("lastUpdatedUserRecipeList", lastUp).commit();
+                if(listener != null) {
+                    listener.onComplete();
+                }
+            }
+        });
+    }
+
+
+    //IMG
     public interface UploadImageListener{
         void onComplete(String url);
     }

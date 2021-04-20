@@ -82,7 +82,9 @@ public class RecipeModelSQL {
     public LiveData<List<Recipe>> getAllRecipes(){
         return AppLocalDb.db.recipeDao().getAll();
     }
-
+    public LiveData<List<Recipe>> getAllUserRecipes(String id){
+        return AppLocalDb.db.recipeDao().getUserRecipes(id);
+    }
     public LiveData<Recipe> getRecipe(String id){
         return AppLocalDb.db.recipeDao().getRecipe(id);
     }

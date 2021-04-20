@@ -79,7 +79,27 @@ public class RecipeModelFirebase {
                 listener.onComplete(data);
             }
         });
+    }
 
+    public void getAllUserRecipes(long lastUpdated, String uid, RecipeModel.GetAllUserRecipesListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Timestamp ts = new Timestamp(lastUpdated,0);
+        db.collection("recipes").whereEqualTo("userCreatorId",uid).whereGreaterThanOrEqualTo("lastUpdated",ts).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<Recipe> data = new LinkedList<Recipe>();
+                if (task.isSuccessful()){
+                    Log.d("TAG", "<<<<GET ALL User RECIPES FROM Model FIREBASE>>>");
+                    for (DocumentSnapshot document:task.getResult()) {
+                        Log.d("TAG", document.getId() + " => " + document.getData());
+                        Recipe rec = new Recipe();
+                        rec.fromMap(document.getData());
+                        data.add(rec);
+                    }
+                }
+                listener.onComplete(data);
+            }
+        });
     }
 
 

@@ -205,8 +205,6 @@ public class CreateFragment extends Fragment {
         recipe.setTitle(recipeName.getText().toString());
         recipe.setCategoryID(categoryId);
         recipe.setApplianceID(applianceId);
-        //TO DO
-
         recipe.setUserCreatorId(user.getUid());
         recipe.setId(this.toString() + recipe.getUserCreatorId());
 
