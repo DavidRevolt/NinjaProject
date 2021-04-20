@@ -18,12 +18,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -43,7 +41,6 @@ import com.example.ninja.model.RecipeModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_CANCELED;
@@ -75,16 +72,16 @@ public class CreateFragment extends Fragment {
         Log.d("TAG","in CreateFragment");
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        recipeImage = root.findViewById(R.id.Create_Recipe_Img);
+        recipeImage = root.findViewById(R.id.RecipeFragm_Img);
         editImage = root.findViewById(R.id.Create_Edit_Img_Button);
-        recipeName = root.findViewById(R.id.Create_Recipe_Name);
-        prepTime = root.findViewById(R.id.Create_Recipe_Prep_Time);
-        cookTime = root.findViewById(R.id.Create_Recipe_Cook_Time);
-        saveBtn = root.findViewById(R.id.Create_Recipe_Save_Button);
-        spinner = root.findViewById(R.id.Create_Spinner);
+        recipeName = root.findViewById(R.id.RecipeFragm_Recipe_Name);
+        prepTime = root.findViewById(R.id.RecipeFragm_Prep_Time);
+        cookTime = root.findViewById(R.id.RecipeFragm_Cook_Time);
+        saveBtn = root.findViewById(R.id.RecipeFragm_Edit_Button);
+        spinner = root.findViewById(R.id.RecipeFragm_Spinner);
         spinner.setVisibility(View.INVISIBLE);
-        categoryBtn = root.findViewById(R.id.Create_Recipe_Category);
-        applianceBtn  = root.findViewById(R.id.Create_Recipe_Appliance);
+        categoryBtn = root.findViewById(R.id.RecipeFragm_Category);
+        applianceBtn  = root.findViewById(R.id.RecipeFragm_Appliance);
 
         appliances= createViewModel.getApplianceList();
         List<Appliance> test = appliances.getValue();

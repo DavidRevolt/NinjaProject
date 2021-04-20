@@ -13,7 +13,7 @@
 
 
         <EditText
-            android:id="@+id/Create_Recipe_Instructions"
+            android:id="@+id/RecipeFragm_Instructions"
             android:layout_width="358dp"
             android:layout_height="241dp"
             android:layout_marginStart="16dp"
@@ -23,13 +23,13 @@
             android:hint="Instructions"
             android:inputType="textLongMessage|textPersonName|text"
             android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@+id/Create_Recipe_Save_Button"
+            app:layout_constraintBottom_toTopOf="@+id/RecipeFragm_Edit_Button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Create_Spinner" />
+            app:layout_constraintTop_toBottomOf="@+id/RecipeFragm_Spinner" />
 
         <EditText
-            android:id="@+id/Create_Recipe_Prep_Time"
+            android:id="@+id/RecipeFragm_Prep_Time"
             android:layout_width="173dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -38,13 +38,13 @@
             android:hint="Prep Time(minutes)"
             android:inputType="numberSigned|textPersonName"
             android:textAlignment="center"
-            app:layout_constraintEnd_toStartOf="@+id/Create_Recipe_Cook_Time"
+            app:layout_constraintEnd_toStartOf="@+id/RecipeFragm_Cook_Time"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Name" />
+            app:layout_constraintTop_toBottomOf="@+id/RecipeFragm_Recipe_Name" />
 
         <EditText
-            android:id="@+id/Create_Recipe_Cook_Time"
+            android:id="@+id/RecipeFragm_Cook_Time"
             android:layout_width="173dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -55,24 +55,24 @@
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/Create_Recipe_Prep_Time"
-            app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Name" />
+            app:layout_constraintStart_toEndOf="@+id/RecipeFragm_Prep_Time"
+            app:layout_constraintTop_toBottomOf="@+id/RecipeFragm_Recipe_Name" />
 
         <Button
-            android:id="@+id/Create_Recipe_Appliance"
+            android:id="@+id/RecipeFragm_Appliance"
             android:layout_width="173dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="64dp"
             android:hint="Appliance"
             app:backgroundTint="#4CAF50"
-            app:layout_constraintEnd_toStartOf="@+id/Create_Recipe_Cook_Time"
+            app:layout_constraintEnd_toStartOf="@+id/RecipeFragm_Cook_Time"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Name" />
+            app:layout_constraintTop_toBottomOf="@+id/RecipeFragm_Recipe_Name" />
 
         <Button
-            android:id="@+id/Create_Recipe_Category"
+            android:id="@+id/RecipeFragm_Category"
             android:layout_width="173dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
@@ -81,11 +81,11 @@
             app:backgroundTint="#4CAF50"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/Create_Recipe_Prep_Time"
-            app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Name" />
+            app:layout_constraintStart_toEndOf="@+id/RecipeFragm_Prep_Time"
+            app:layout_constraintTop_toBottomOf="@+id/RecipeFragm_Recipe_Name" />
 
         <ImageView
-            android:id="@+id/Create_Recipe_Img"
+            android:id="@+id/RecipeFragm_Img"
             android:layout_width="0dp"
             android:layout_height="294dp"
             android:layout_marginStart="16dp"
@@ -103,11 +103,11 @@
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"
             android:src="@android:drawable/ic_menu_edit"
-            app:layout_constraintBottom_toBottomOf="@+id/Create_Recipe_Img"
-            app:layout_constraintEnd_toEndOf="@+id/Create_Recipe_Img" />
+            app:layout_constraintBottom_toBottomOf="@+id/RecipeFragm_Img"
+            app:layout_constraintEnd_toEndOf="@+id/RecipeFragm_Img" />
 
         <EditText
-            android:id="@+id/Create_Recipe_Name"
+            android:id="@+id/RecipeFragm_Recipe_Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -119,10 +119,10 @@
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Img" />
+            app:layout_constraintTop_toBottomOf="@+id/RecipeFragm_Img" />
 
         <Button
-            android:id="@+id/Create_Recipe_Save_Button"
+            android:id="@+id/RecipeFragm_Edit_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -131,10 +131,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Create_Recipe_Instructions" />
+            app:layout_constraintTop_toBottomOf="@+id/RecipeFragm_Instructions" />
 
         <ProgressBar
-            android:id="@+id/Create_Spinner"
+            android:id="@+id/RecipeFragm_Spinner"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
