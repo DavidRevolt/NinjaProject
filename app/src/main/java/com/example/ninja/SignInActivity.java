@@ -1,10 +1,13 @@
 package com.example.ninja;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -17,12 +20,24 @@ import java.util.List;
 
 public class SignInActivity extends AppCompatActivity {
 
+    Button go;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        go = findViewById(R.id.SignIn_Go_Btn);
+        go.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logIn();
+            }
+        });
+        logIn();
+    }
 
-
+    private void logIn() {
         final int RC_SIGN_IN = 123;
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build());
@@ -33,9 +48,8 @@ public class SignInActivity extends AppCompatActivity {
                         .setAvailableProviders(providers)
                         .build(),
                 RC_SIGN_IN);
-
-
     }
+
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -67,4 +81,7 @@ public class SignInActivity extends AppCompatActivity {
             }
         }
     }
+
+
+
 }
