@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -21,6 +22,7 @@ import java.util.List;
 public class SignInActivity extends AppCompatActivity {
 
     Button go;
+    ProgressBar spinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,8 @@ public class SignInActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         go = findViewById(R.id.SignIn_Go_Btn);
+        spinner= findViewById(R.id.SignIn_Spinner);
+        spinner.setVisibility(View.INVISIBLE);
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,6 +64,8 @@ public class SignInActivity extends AppCompatActivity {
 
             // Successfully signed in
             if (resultCode == RESULT_OK) {
+                go.setVisibility(View.INVISIBLE);
+                spinner.setVisibility(View.VISIBLE);
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 Log.d("TAG", "<<<<LOGGED IN!>>>>");
                 Log.d("TAG", "<<<<User Email: " + user.getEmail()+ ">>>>");

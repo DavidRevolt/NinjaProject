@@ -116,6 +116,16 @@ public class RecipeFragment extends Fragment {
                 builder.show();
             }});
 
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("TAG","RecipeFragment Goin 2 Create/EDIT Fragment With Recipe: " + recipe.getTitle());
+                Navigation.findNavController(root).navigate(RecipeFragmentDirections.actionNavigationRecipeToNavigationCreate(
+                        recipe.getCookTime(),recipe.getPrepTime(),recipe.getTitle(),recipe.getCategoryID(),recipe.getApplianceID(),
+                        recipe.getInstructions(),recipe.getId(),recipe.getImgURL(),appliance.getText().toString(),category.getText().toString()
+                ));
+            }
+        });
 
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -164,14 +174,14 @@ public class RecipeFragment extends Fragment {
                 CategoryModel.instance.refreshGetAllCategories(new CategoryModel.RefreshGetAllCategoriesListener() {
                     @Override
                     public void onComplete() {
-                        String name =recipeViewModel.getCategoryList().getValue().get(Integer.parseInt(recipe.getCategoryID())).getName();
+                        String name =recipeViewModel.getCategoryList().getValue().get(Integer.parseInt(recipe.getCategoryID())-1).getName();
                         category.setText(name);
                     }
                 });
                 ApplianceModel.instance.refreshGetAllAppliances(new ApplianceModel.RefreshGetAllAppliancesListener(){
                     @Override
                     public void onComplete() {
-                        String name2 =recipeViewModel.getApplianceList().getValue().get(Integer.parseInt(recipe.getApplianceID())).getName();
+                        String name2 =recipeViewModel.getApplianceList().getValue().get(Integer.parseInt(recipe.getApplianceID())-1).getName();
                         appliance.setText(name2);
                     }
 

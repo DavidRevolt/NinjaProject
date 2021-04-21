@@ -66,8 +66,6 @@ public class HomeFragment extends Fragment {
             public void onItemClick(int position) {
                 String recipeID = homeViewModel.getRecipeList().getValue().get(position).getId();
                 Log.d("TAG","HomeFragment Goin 2 Recipe Fragment With RecipeId: " + recipeID);
-
-                //HomeFragmentDirections.ActionNavigationHomeToNavigationRecipe action = HomeFragmentDirections.actionNavigationHomeToNavigationRecipe(recipeID);
                 Navigation.findNavController(root).navigate(HomeFragmentDirections.actionGlobalNavigationRecipe(recipeID));
             }
         });

@@ -48,7 +48,7 @@ public class HomeRecipeListViewHolder extends RecyclerView.ViewHolder {
 
         recipeImg.setImageResource(R.drawable.plate);
         if (recipe.getImgURL() != null)
-            Picasso.get().load(recipe.getImgURL()).placeholder(R.drawable.plate).into(recipeImg);
+            Picasso.get().load(recipe.getImgURL()).placeholder(R.drawable.plate).centerCrop().fit().into(recipeImg);
 
 
         this.position = position;

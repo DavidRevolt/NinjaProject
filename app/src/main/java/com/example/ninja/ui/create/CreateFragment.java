@@ -15,16 +15,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -33,7 +29,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-
 import com.example.ninja.R;
 import com.example.ninja.model.Appliance;
 import com.example.ninja.model.ApplianceModel;
@@ -41,12 +36,12 @@ import com.example.ninja.model.Category;
 import com.example.ninja.model.CategoryModel;
 import com.example.ninja.model.Recipe;
 import com.example.ninja.model.RecipeModel;
+import com.example.ninja.ui.recipe.RecipeFragmentArgs;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 public class CreateFragment extends Fragment {
@@ -68,6 +63,12 @@ public class CreateFragment extends Fragment {
     public LiveData<List<Category>> categories;
     public LiveData<List<Appliance>> appliances;
 
+    CreateFragmentArgs bundle;
+    Boolean editMode;
+
+
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -88,9 +89,25 @@ public class CreateFragment extends Fragment {
         applianceBtn  = root.findViewById(R.id.Create_Recipe_Appliance);
         instructions = root.findViewById(R.id.Create_Recipe_Instructions);
         appliances= createViewModel.getApplianceList();
-        List<Appliance> test = appliances.getValue();
         categories = createViewModel.getCategoryList();
+        editMode = false;
 
+
+
+        if(!getArguments().isEmpty())
+        {
+            bundle = CreateFragmentArgs.fromBundle(getArguments());
+            editMode = true;
+            Picasso.get().load(bundle.getEditImgUrl()).placeholder(R.drawable.plate).into(recipeImage);
+            recipeName.setText(bundle.getEditTitle());
+            prepTime.setText(String.valueOf(bundle.getEditPrepTime()));
+            cookTime.setText(String.valueOf(bundle.getEditCookTime()));
+            instructions.setText(bundle.getEditInstructions());
+            categoryId = bundle.getEditCategoryID();
+            applianceId = bundle.getEditApplianceID();
+            categoryBtn.setText(bundle.getEditCategoryName());
+            applianceBtn.setText(bundle.getEditApplianceName());
+        }
 
 
 
@@ -211,7 +228,10 @@ public class CreateFragment extends Fragment {
         recipe.setApplianceID(applianceId);
         recipe.setInstructions(instructions.getText().toString());
         recipe.setUserCreatorId(user.getEmail());
+        if(!editMode)
         recipe.setId(this.toString() + recipe.getUserCreatorId());
+        else
+            recipe.setId(bundle.getEditId());
 
 
 
