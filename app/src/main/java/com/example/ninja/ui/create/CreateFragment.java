@@ -1,4 +1,3 @@
-
 package com.example.ninja.ui.create;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
@@ -17,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +56,6 @@ public class CreateFragment extends Fragment {
     FirebaseUser user;
     public LiveData<List<Category>> categories;
     public LiveData<List<Appliance>> appliances;
-
     CreateFragmentArgs bundle;
     Boolean editMode;
 
@@ -69,7 +66,6 @@ public class CreateFragment extends Fragment {
 
         createViewModel = new ViewModelProvider(this).get(CreateViewModel.class);
         View root =  inflater.inflate(R.layout.fragment_create, container, false);
-        Log.d("TAG","in CreateFragment");
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         recipeImage = root.findViewById(R.id.Create_Recipe_Img);
@@ -125,14 +121,9 @@ public class CreateFragment extends Fragment {
         });
 
 
-
-        //CATEGORY BUTTON
         createViewModel.getCategoryList().observe(getViewLifecycleOwner(), new Observer<List<Category>>() {
             @Override
             public void onChanged(List<Category> recipes) {
-
-                Log.d("TAG", "<<<<NEW LIVEDATA OF Category LIST TO Create FRAGMENT!>>>");
-
             }
         });
 
@@ -172,8 +163,6 @@ public class CreateFragment extends Fragment {
         createViewModel.getApplianceList().observe(getViewLifecycleOwner(), new Observer<List<Appliance>>() {
             @Override
             public void onChanged(List<Appliance> recipes) {
-                Log.d("TAG", "<<<<NEW LIVEDATA OF Appliance LIST TO Create FRAGMENT!>>>");
-
             }
         });
 
@@ -239,7 +228,6 @@ public class CreateFragment extends Fragment {
             @Override
             public void onComplete(String url) {
                 if (url == null){
-                    Log.d("TAG","ERROR in CreateFragment Because URL IS NULL");
                     displayFailedError();
                 }else{
                     recipe.setImgURL(url);

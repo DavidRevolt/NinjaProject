@@ -60,7 +60,6 @@ public class RecipeFragment extends Fragment {
 
         recipeID = RecipeFragmentArgs.fromBundle(getArguments()).getRecipeID();
         recipeViewModel.setRecipeId(recipeID);
-        Log.d("TAG","in RecipeFragment , Recipe ID:  " + recipeID);
 
 
         spinner = root.findViewById(R.id.RecipeFragment_Spinner);
@@ -102,7 +101,6 @@ public class RecipeFragment extends Fragment {
                         })
                         .setNegativeButton("NO!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
                             }
                         });
 
@@ -113,7 +111,6 @@ public class RecipeFragment extends Fragment {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("TAG","RecipeFragment Goin 2 Create/EDIT Fragment With Recipe: " + recipe.getTitle());
                 Navigation.findNavController(root).navigate(RecipeFragmentDirections.actionNavigationRecipeToNavigationCreate(
                         recipe.getCookTime(),recipe.getPrepTime(),recipe.getTitle(),recipe.getCategoryID(),recipe.getApplianceID(),
                         recipe.getInstructions(),recipe.getId(),recipe.getImgURL(),appliance.getText().toString(),category.getText().toString()
@@ -134,19 +131,16 @@ public class RecipeFragment extends Fragment {
         recipeViewModel.getApplianceList().observe(getViewLifecycleOwner(), new Observer<List<Appliance>>() {
             @Override
             public void onChanged(List<Appliance> app) {
-                Log.d("TAG", "<<<<NEW LIVEDATA OF CAT LIST TO HOME FRAGMENT!>>>");
             }
         });
         recipeViewModel.getCategoryList().observe(getViewLifecycleOwner(), new Observer<List<Category>>() {
             @Override
             public void onChanged(List<Category> cat) {
-                Log.d("TAG", "<<<<NEW LIVEDATA OF APP LIST TO HOME FRAGMENT!>>>");
             }
         });
         recipeViewModel.getRecipe().observe(getViewLifecycleOwner(), new Observer<Recipe>() {
             @Override
             public void onChanged(Recipe rec) {
-                Log.d("TAG", "<<<<NEW LIVEDATA OF RECIPE LIST TO HOME FRAGMENT!>>>");
             }
         });
         refreshData();
@@ -158,7 +152,6 @@ public class RecipeFragment extends Fragment {
 
 
     void refreshData(){
-        Log.d("TAG", "<<<<Recipe Fragment Refreshing Data>>>");
 
         RecipeModel.instance.refreshGetRecipe(recipeID, new RecipeModel.RefreshGetRecipeListener() {
             @Override
@@ -216,7 +209,7 @@ public class RecipeFragment extends Fragment {
                     ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(recipe.getTitle());
                 }
 
-                else //NOT FOUND
+                else
                 {
                     madeBy.setVisibility(View.INVISIBLE);
                     category.setVisibility(View.INVISIBLE);

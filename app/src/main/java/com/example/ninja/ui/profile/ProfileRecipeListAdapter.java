@@ -11,18 +11,16 @@ import java.util.List;
 
 public class ProfileRecipeListAdapter extends RecyclerView.Adapter<ProfileRecipeListViewHolder> {
 
-    //Members
     public LiveData<List<Recipe>> data;
     LayoutInflater inflater;
     private ProfileRecipeListAdapter.OnItemClickListener listener;
 
-    //Constructor
     public ProfileRecipeListAdapter(LayoutInflater inflater){
         this.inflater = inflater;
 
     }
 
-    //Click
+
     public interface OnItemClickListener{
         void onItemClick(int position);
     }

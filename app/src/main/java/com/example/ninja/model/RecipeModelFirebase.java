@@ -3,9 +3,7 @@ package com.example.ninja.model;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -13,12 +11,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import java.io.ByteArrayOutputStream;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,27 +34,30 @@ public class RecipeModelFirebase {
     }
 
 
+
     public void addRecipe(Recipe recipe, RecipeModel.AddRecipeListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("recipes").document(recipe.getId())
                 .set(recipe.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.d("TAG","Recipe added successfully");
                 listener.onComplete();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d("TAG","failed adding Recipe");
                 listener.onComplete();
             }
         });
     }
 
+
     public void updateRecipe(Recipe recipe, RecipeModel.UpdateRecipeListener listener) {
         addRecipe(recipe,listener);
     }
+
+
+
 
     public void getAllRecipes(long lastUpdated, RecipeModel.GetAllRecipesListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -68,13 +67,31 @@ public class RecipeModelFirebase {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<Recipe> data = new LinkedList<Recipe>();
                 if (task.isSuccessful()){
-                    Log.d("TAG", "<<<<GET ALL RECIPES FROM FIREBASE>>>");
                     for (DocumentSnapshot document:task.getResult()) {
                         Recipe rec = new Recipe();
                         rec.fromMap(document.getData());
                         data.add(rec);
-                        //Log.d("TAG", document.getId() + " => " + document.getData());
-                        Log.d("TAG", "From Firebase =>  " + rec.getTitle());
+                    }
+                }
+                listener.onComplete(data);
+            }
+        });
+    }
+
+
+
+    public void getAllUserRecipes(long lastUpdated, String uid, RecipeModel.GetAllUserRecipesListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Timestamp ts = new Timestamp(lastUpdated,0);
+        db.collection("recipes").whereEqualTo("userCreatorId",uid).whereGreaterThanOrEqualTo("lastUpdated",ts).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<Recipe> data = new LinkedList<Recipe>();
+                if (task.isSuccessful()){
+                    for (DocumentSnapshot document:task.getResult()) {
+                        Recipe rec = new Recipe();
+                        rec.fromMap(document.getData());
+                        data.add(rec);
                     }
                 }
                 listener.onComplete(data);
@@ -82,27 +99,6 @@ public class RecipeModelFirebase {
         });
     }
 
-    public void getAllUserRecipes(long lastUpdated, String uid, RecipeModel.GetAllUserRecipesListener listener) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Timestamp ts = new Timestamp(lastUpdated,0);
-        Log.d("TAG", "<<<<GET ALL User RECIPES FROM Model FIREBASE FOR:"+uid + " PART1>>>");
-        db.collection("recipes").whereEqualTo("userCreatorId",uid).whereGreaterThanOrEqualTo("lastUpdated",ts).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<Recipe> data = new LinkedList<Recipe>();
-                if (task.isSuccessful()){
-                    Log.d("TAG", "<<<<GET ALL User RECIPES FROM Model FIREBASE FOR:"+uid + ">>>");
-                    for (DocumentSnapshot document:task.getResult()) {
-                        Log.d("TAG", document.getId() + " => " + document.getData());
-                        Recipe rec = new Recipe();
-                        rec.fromMap(document.getData());
-                        data.add(rec);
-                    }
-                }
-                listener.onComplete(data);
-            }
-        });
-    }
 
 
     public void getRecipe(String id, RecipeModel.GetRecipeListener listener) {
@@ -122,6 +118,7 @@ public class RecipeModelFirebase {
             }
         });
     }
+
 
 
     public void uploadImage(Bitmap imageBmp, String name, final RecipeModel.UploadImageListener listener){

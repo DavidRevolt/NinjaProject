@@ -28,11 +28,11 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        //starts ViewModel
+
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        //Swipe2Refresh
+
         swipeRefresh = root.findViewById(R.id.HomeSwipeRefresh);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -43,7 +43,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        //List settings
+
         recipeRecyclerView = root.findViewById(R.id.HomeRecipeList);
         recipeRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -53,12 +53,11 @@ public class HomeFragment extends Fragment {
         adapter = new HomeRecipeListAdapter(getLayoutInflater());
         adapter.data = homeViewModel.getRecipeList();
 
-        //Navigation2Recipe
+
         adapter.setOnClickListener(new HomeRecipeListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 String recipeID = homeViewModel.getRecipeList().getValue().get(position).getId();
-                Log.d("TAG","HomeFragment Goin 2 Recipe Fragment With RecipeId: " + recipeID);
                 Navigation.findNavController(root).navigate(HomeFragmentDirections.actionGlobalNavigationRecipe(recipeID));
             }
         });
@@ -67,7 +66,6 @@ public class HomeFragment extends Fragment {
         homeViewModel.getRecipeList().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
             @Override
             public void onChanged(List<Recipe> recipes) {
-                Log.d("TAG", "<<<<NEW LIVEDATA OF RECIPE LIST TO HOME FRAGMENT!>>>");
                 adapter.notifyDataSetChanged();
             }
         });
@@ -78,7 +76,6 @@ public class HomeFragment extends Fragment {
 
 
     void refreshData(){
-        Log.d("TAG", "<<<<Home Fragment Refreshing Data>>>");
         RecipeModel.instance.refreshGetAllRecipes(new RecipeModel.RefreshGetAllRecipesListener() {
             @Override
             public void onComplete() {
