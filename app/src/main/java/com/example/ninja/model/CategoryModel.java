@@ -2,13 +2,8 @@ package com.example.ninja.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
-
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 import com.example.ninja.MyApplication;
-
 import java.util.List;
 
 public class CategoryModel {
@@ -76,7 +71,6 @@ public class CategoryModel {
 
 
 
-    //GET ALL CATEGORIES
     LiveData<List<Category>> categoriesList;
     public interface GetAllCategoriesListener {
         void onComplete(List<Category> data);
@@ -91,7 +85,6 @@ public class CategoryModel {
 
 
 
-    //Refresh CategoriesList^^
     public interface RefreshGetAllCategoriesListener{
         void onComplete();
     }
@@ -121,7 +114,7 @@ public class CategoryModel {
 
 
 
-    //GET CATEGORY
+
     LiveData<Category> category;
     public interface GetCategoryListener{
         void onComplete(Category category);
@@ -132,7 +125,7 @@ public class CategoryModel {
         return category;
     }
 
-    //Refresh Category^^
+
     public interface RefreshGetCategoryListener{
         void onComplete();
     }

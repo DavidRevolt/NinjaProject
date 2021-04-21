@@ -2,7 +2,6 @@ package com.example.ninja.ui.browse;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.ninja.R;
@@ -11,7 +10,6 @@ import com.squareup.picasso.Picasso;
 
 public class BrowseRecipeListViewHolder  extends RecyclerView.ViewHolder {
 
-    //layout members
     public BrowseRecipeListAdapter.OnItemClickListener listener;
     TextView recipeName;
     TextView prepTime;

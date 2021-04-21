@@ -3,13 +3,9 @@ package com.example.ninja.model;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FieldValue;
-
-
 import java.util.HashMap;
-
 import java.util.Map;
 
 
@@ -26,7 +22,6 @@ public class Recipe {
     private int prepTime;
     private int cookTime;
     private int totalTime;
-    private int likesCounter;
     private String instructions;
     private Boolean deleted;
     private String applianceID;
@@ -43,7 +38,6 @@ public class Recipe {
         result.put("cookTime", cookTime);
         result.put("deleted", deleted);
         result.put("totalTime", cookTime+prepTime);
-        result.put("likesCounter", likesCounter);
         result.put("instructions", instructions);
         result.put("applianceID", applianceID);
         result.put("categoryID", categoryID);
@@ -59,7 +53,6 @@ public class Recipe {
         prepTime = (int)(long)map.get("prepTime");
         cookTime = (int)(long)map.get("cookTime");
         totalTime = (int)(long)map.get("totalTime");
-        likesCounter = (int)(long)map.get("likesCounter");
         instructions = (String)map.get("instructions");
         applianceID = (String)map.get("applianceID");
         categoryID = (String)map.get("categoryID");
@@ -100,14 +93,6 @@ public class Recipe {
 
     public void setImgURL(String imgURL) {
         this.imgURL = imgURL;
-    }
-
-    public int getLikesCounter() {
-        return likesCounter;
-    }
-
-    public void setLikesCounter(int likesCounter) {
-        this.likesCounter = likesCounter;
     }
 
     public String getApplianceID() {

@@ -2,9 +2,7 @@ package com.example.ninja.model;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
 import androidx.lifecycle.LiveData;
-
 import java.util.List;
 
 public class RecipeModelSQL {
@@ -33,6 +31,7 @@ public class RecipeModelSQL {
         task.execute();
     }
 
+
     public interface AddRecipeListener{
         void onComplete();
     }
@@ -58,6 +57,7 @@ public class RecipeModelSQL {
         MyAsyncTask task = new MyAsyncTask();
         task.execute();
     }
+
 
     public interface UpdateRecipeListener{
         void onComplete();

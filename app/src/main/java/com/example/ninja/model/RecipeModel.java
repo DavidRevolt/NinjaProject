@@ -1,17 +1,11 @@
 package com.example.ninja.model;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 import com.example.ninja.MyApplication;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.util.Listener;
-
 import java.util.List;
 
 public class RecipeModel {
@@ -83,8 +77,7 @@ public class RecipeModel {
 
 
 
-    //
-    //Get All Recipes In Firebase
+
     LiveData<List<Recipe>> recipesList;
     public interface GetAllRecipesListener{
         void onComplete(List<Recipe> data);
@@ -97,7 +90,7 @@ public class RecipeModel {
         return recipesList;
     }
 
-    //Refresh RecipesList^^
+
     public interface RefreshGetAllRecipesListener{
         void onComplete();
     }
@@ -129,7 +122,6 @@ public class RecipeModel {
 
 
 
-    //Get Recipe
     LiveData<Recipe> recipe;
     public interface GetRecipeListener{
         void onComplete(Recipe recipe);
@@ -141,7 +133,7 @@ public class RecipeModel {
     }
 
 
-    //Refresh Recipe^^
+
     public interface RefreshGetRecipeListener{
         void onComplete();
     }
@@ -162,8 +154,7 @@ public class RecipeModel {
     }
 
 
-    //
-    //Get All User Recipes In Firebase
+
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();;
     LiveData<List<Recipe>> userRecipesList;
     public interface GetAllUserRecipesListener{
@@ -177,7 +168,7 @@ public class RecipeModel {
         return userRecipesList;
     }
 
-    //Refresh UserRecipesList^^
+
     public interface RefreshGetAllUserRecipesListener{
         void onComplete();
     }
@@ -207,7 +198,7 @@ public class RecipeModel {
     }
 
 
-    //IMG
+
     public interface UploadImageListener{
         void onComplete(String url);
     }

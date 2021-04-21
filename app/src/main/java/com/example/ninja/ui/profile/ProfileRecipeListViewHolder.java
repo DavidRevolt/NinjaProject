@@ -10,7 +10,6 @@ import com.squareup.picasso.Picasso;
 
 public class ProfileRecipeListViewHolder extends RecyclerView.ViewHolder {
 
-    //layout members
     public ProfileRecipeListAdapter.OnItemClickListener listener;
     TextView recipeName;
     TextView prepTime;

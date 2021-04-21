@@ -8,10 +8,9 @@ import java.util.List;
 
 public class HomeViewModel extends ViewModel {
 
-    //Data
     private LiveData<List<Recipe>> recipeList;
 
-    //constructor
+
     public HomeViewModel() {
         recipeList = RecipeModel.instance.GetAllRecipes();
     }

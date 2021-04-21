@@ -13,6 +13,7 @@ public class CreateViewModel extends ViewModel {
     private LiveData<List<Category>> categoryList;
     private LiveData<List<Appliance>> applianceList;
 
+
     public CreateViewModel() {
         categoryList = CategoryModel.instance.GetAllCategories();
         applianceList = ApplianceModel.instance.GetAllAppliances();

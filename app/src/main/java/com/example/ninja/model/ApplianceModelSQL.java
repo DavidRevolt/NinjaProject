@@ -1,9 +1,6 @@
 package com.example.ninja.model;
-
 import android.os.AsyncTask;
-
 import androidx.lifecycle.LiveData;
-
 import java.util.List;
 
 public class ApplianceModelSQL {

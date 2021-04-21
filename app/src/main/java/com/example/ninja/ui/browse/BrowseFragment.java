@@ -1,11 +1,9 @@
 package com.example.ninja.ui.browse;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -42,7 +40,7 @@ public class BrowseFragment extends Fragment {
             }
         });
 
-        //List settings
+
         recipeRecyclerView = root.findViewById(R.id.BrowseRecipeList);
         recipeRecyclerView.setHasFixedSize(true);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(),3);
@@ -50,12 +48,11 @@ public class BrowseFragment extends Fragment {
         adapter = new BrowseRecipeListAdapter(getLayoutInflater());
         adapter.data = browseViewModel.getRecipeList();
 
-        //Navigation2Recipe
+
         adapter.setOnClickListener(new BrowseRecipeListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 String recipeID = browseViewModel.getRecipeList().getValue().get(position).getId();
-                Log.d("TAG","BrowseFragment Goin 2 Recipe Fragment With RecipeId: " + recipeID);
                 Navigation.findNavController(root).navigate(BrowseFragmentDirections.actionGlobalNavigationRecipe(recipeID));
             }
         });
@@ -63,7 +60,6 @@ public class BrowseFragment extends Fragment {
         browseViewModel.getRecipeList().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
             @Override
             public void onChanged(List<Recipe> recipes) {
-                Log.d("TAG", "<<<<NEW LIVEDATA OF RECIPE LIST TO Browse FRAGMENT!>>>");
                 adapter.notifyDataSetChanged();
             }
         });
@@ -74,7 +70,6 @@ public class BrowseFragment extends Fragment {
 
 
     void refreshData(){
-        Log.d("TAG", "<<<<Browse Fragment Refreshing Data>>>");
         RecipeModel.instance.refreshGetAllRecipes(new RecipeModel.RefreshGetAllRecipesListener() {
             @Override
             public void onComplete() {

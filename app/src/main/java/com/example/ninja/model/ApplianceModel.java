@@ -1,14 +1,8 @@
 package com.example.ninja.model;
-
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
-
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 import com.example.ninja.MyApplication;
-
 import java.util.List;
 
 public class ApplianceModel {
@@ -79,8 +73,6 @@ public class ApplianceModel {
 
 
 
-
-    //GET ALL Appliance
     LiveData<List<Appliance>> AppliancesList;
     public interface GetAllAppliancesListener {
         void onComplete(List<Appliance> data);
@@ -94,12 +86,10 @@ public class ApplianceModel {
     }
 
 
-    //Refresh AppliancesList^^
+
     public interface RefreshGetAllAppliancesListener{
         void onComplete();
     }
-
-
     public void refreshGetAllAppliances(RefreshGetAllAppliancesListener listener){
         final SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
         long lastUpdated = sp.getLong("lastUpAppList",0);
@@ -127,7 +117,6 @@ public class ApplianceModel {
 
 
 
-    //GET APPLIANCE
     LiveData<Appliance> appliance;
     public interface GetApplianceListener{
         void onComplete(Appliance appliance);
@@ -138,7 +127,7 @@ public class ApplianceModel {
         return appliance;
     }
 
-    //Refresh Category^^
+
     public interface RefreshGetApplianceListener{
         void onComplete();
     }

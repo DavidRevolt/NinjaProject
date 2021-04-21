@@ -63,23 +63,17 @@ public class SignInActivity extends AppCompatActivity {
                 go.setVisibility(View.INVISIBLE);
                 spinner.setVisibility(View.VISIBLE);
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                Log.d("TAG", "<<<<LOGGED IN!>>>>");
-                Log.d("TAG", "<<<<User Email: " + user.getEmail()+ ">>>>");
                 Intent intent = new Intent(SignInActivity.this,MainActivity.class);
                 startActivity(intent);
                 finish();
             } else {
-                // Sign in failed
                 if (response == null) {
-                    // User pressed back button
                     return;
                 }
 
                 if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
                     return;
                 }
-
-                Log.e("TAG", "Sign-in error: ", response.getError());
             }
         }
     }

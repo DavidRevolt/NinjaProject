@@ -13,19 +13,17 @@ import java.util.List;
 public class BrowseRecipeListAdapter extends RecyclerView.Adapter<BrowseRecipeListViewHolder>{
 
 
-    //Members
     public LiveData<List<Recipe>> data;
     LayoutInflater inflater;
     private BrowseRecipeListAdapter.OnItemClickListener listener;
 
 
-    //Constructor
     public BrowseRecipeListAdapter(LayoutInflater inflater){
         this.inflater = inflater;
 
     }
 
-    //Click
+
     public interface OnItemClickListener{
         void onItemClick(int position);
     }
