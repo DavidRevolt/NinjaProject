@@ -1,30 +1,22 @@
 package com.example.ninja.ui.profile;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.example.ninja.R;
 import com.example.ninja.model.Recipe;
 import com.example.ninja.model.RecipeModel;
-import com.example.ninja.ui.home.HomeFragmentDirections;
-import com.example.ninja.ui.home.HomeRecipeListAdapter;
-
 import java.util.List;
+
 
 public class ProfileFragment extends Fragment {
 
@@ -41,7 +33,6 @@ public class ProfileFragment extends Fragment {
         profileViewModel =new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
-
         //Swipe2Refresh
         swipeRefresh = root.findViewById(R.id.ProfileSwipeRefresh);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -53,11 +44,10 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
         //List settings
         recipeRecyclerView = root.findViewById(R.id.ProfileRecipeList);
         recipeRecyclerView.setHasFixedSize(true);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),3);
         recipeRecyclerView.setLayoutManager(layoutManager);
 
         adapter = new ProfileRecipeListAdapter(getLayoutInflater());

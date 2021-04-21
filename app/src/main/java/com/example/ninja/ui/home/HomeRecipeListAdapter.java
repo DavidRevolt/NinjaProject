@@ -1,14 +1,10 @@
 package com.example.ninja.ui.home;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.ninja.R;
 import com.example.ninja.model.Recipe;
 

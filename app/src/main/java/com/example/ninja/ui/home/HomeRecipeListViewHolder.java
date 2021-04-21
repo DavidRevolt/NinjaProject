@@ -1,17 +1,15 @@
 package com.example.ninja.ui.home;
-
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.ninja.R;
 import com.example.ninja.model.Recipe;
 import com.squareup.picasso.Picasso;
 
 public class HomeRecipeListViewHolder extends RecyclerView.ViewHolder {
+
     //layout members
     public HomeRecipeListAdapter.OnItemClickListener listener;
     TextView recipeName;
@@ -20,7 +18,6 @@ public class HomeRecipeListViewHolder extends RecyclerView.ViewHolder {
     TextView totalTime;
     ImageView recipeImg;
     int position;
-
 
 
     public HomeRecipeListViewHolder(@NonNull View itemView) {
@@ -49,7 +46,6 @@ public class HomeRecipeListViewHolder extends RecyclerView.ViewHolder {
         recipeImg.setImageResource(R.drawable.plate);
         if (recipe.getImgURL() != null)
             Picasso.get().load(recipe.getImgURL()).placeholder(R.drawable.plate).centerCrop().fit().into(recipeImg);
-
 
         this.position = position;
     }

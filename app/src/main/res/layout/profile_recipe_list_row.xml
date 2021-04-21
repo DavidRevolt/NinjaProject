@@ -3,41 +3,92 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+
+    >
 
 
     <ImageView
         android:id="@+id/Profile_RecipeList_Img"
         android:layout_width="match_parent"
-        android:layout_height="258dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="257dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="3dp"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:layout_constraintVertical_bias="0.026"
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        android:background="@drawable/round_image"
+        />
 
     <TextView
         android:id="@+id/Profile_RecipeList_Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center|center_vertical"
         android:text="TextView"
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Profile_RecipeList_Cook"
+        app:layout_constraintTop_toBottomOf="@+id/Profile_RecipeList_Img"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/Profile_RecipeList_CookTitle"
+        android:layout_width="43dp"
+        android:layout_height="19dp"
+        android:text="COOK"
+        android:textAlignment="center"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Profile_RecipeList_Img"
+        app:layout_constraintVertical_bias="0.111" />
+
+
+    <TextView
+        android:id="@+id/Profile_RecipeList_Prep"
+        android:layout_width="43dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="4dp"
+        android:gravity="center"
+        android:text="1"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.032"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Profile_RecipeList_Img"
+        app:layout_constraintVertical_bias="0.272" />
+
+    <TextView
+        android:id="@+id/Profile_RecipeList_PrepTitle"
+        android:layout_width="43dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="4dp"
+        android:text="PREP"
+        android:textAlignment="center"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.032"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Profile_RecipeList_Img"
+        app:layout_constraintVertical_bias="0.116" />
 
     <TextView
         android:id="@+id/Profile_RecipeList_Cook"
@@ -46,82 +97,44 @@
         android:gravity="center"
         android:text="1"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.772" />
+        app:layout_constraintTop_toBottomOf="@+id/Profile_RecipeList_Img"
+        app:layout_constraintVertical_bias="0.275" />
+
 
     <TextView
         android:id="@+id/Profile_RecipeList_Total"
         android:layout_width="43dp"
         android:layout_height="32dp"
+        android:layout_marginEnd="4dp"
         android:gravity="center"
         android:text="1"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.839"
+        app:layout_constraintHorizontal_bias="0.967"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.77" />
-
-    <TextView
-        android:id="@+id/Profile_RecipeList_CookTitle"
-        android:layout_width="43dp"
-        android:layout_height="19dp"
-        android:text="COOK"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.703" />
+        app:layout_constraintTop_toBottomOf="@+id/Profile_RecipeList_Img"
+        app:layout_constraintVertical_bias="0.272" />
 
     <TextView
         android:id="@+id/Profile_RecipeList_TotalTitle"
         android:layout_width="43dp"
         android:layout_height="19dp"
+        android:layout_marginEnd="4dp"
         android:text="TOTAL"
         android:textAlignment="center"
+        android:textSize="8sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.839"
+        app:layout_constraintHorizontal_bias="0.967"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.703" />
-
-    <TextView
-        android:id="@+id/Profile_RecipeList_Prep"
-        android:layout_width="43dp"
-        android:layout_height="32dp"
-        android:gravity="center"
-        android:text="1"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.187"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.77" />
-
-    <TextView
-        android:id="@+id/Profile_RecipeList_PrepTitle"
-        android:layout_width="43dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="28dp"
-        android:gravity="center"
-        android:text="PREP"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.187"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.683" />
+        app:layout_constraintTop_toBottomOf="@+id/Profile_RecipeList_Img"
+        app:layout_constraintVertical_bias="0.116" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

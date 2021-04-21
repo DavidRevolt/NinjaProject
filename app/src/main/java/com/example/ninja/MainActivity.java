@@ -1,21 +1,13 @@
 package com.example.ninja;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.util.Arrays;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     NavController navController;
@@ -36,9 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
-
 
 
 

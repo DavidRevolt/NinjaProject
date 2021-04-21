@@ -24,7 +24,7 @@
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.ninja.ui.profile.ProfileFragment"
-        android:label="My Profile"
+        android:label="My Recipes"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/navigation_recipe"

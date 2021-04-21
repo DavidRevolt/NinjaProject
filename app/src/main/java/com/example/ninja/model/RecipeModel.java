@@ -25,19 +25,24 @@ public class RecipeModel {
         void onComplete();
     }
     public void delRecipe(final Recipe recipe, final DelRecipeListener listener){
-        modelFirebase.delRecipe(recipe,listener);
-        modelSql.delRecipe(recipe, new RecipeModelSQL.DelRecipeListener() {
+        recipe.setDeleted(Boolean.TRUE);
+        modelFirebase.updateRecipe(recipe, new UpdateRecipeListener() {
             @Override
             public void onComplete() {
-                refreshGetAllRecipes(new RefreshGetAllRecipesListener() {
+                modelSql.delRecipe(recipe, new RecipeModelSQL.DelRecipeListener() {
                     @Override
                     public void onComplete() {
-                        listener.onComplete();
+                        refreshGetAllRecipes(new RefreshGetAllRecipesListener() {
+                            @Override
+                            public void onComplete() {
+                                listener.onComplete();
+                            }
+                        });
                     }
                 });
-
             }
         });
+
     }
 
 
@@ -105,7 +110,10 @@ public class RecipeModel {
             public void onComplete(List<Recipe> data) {
                 long lastUp = 0;
                 for (Recipe rec: data) {
-                    modelSql.addRecipe(rec,null);
+                    if(rec.getDeleted()==true)
+                    modelSql.delRecipe(rec,null);
+                    else
+                        modelSql.addRecipe(rec,null);
                     if (rec.getLastUpdated()>lastUp){
                         lastUp = rec.getLastUpdated();
                     }
@@ -141,7 +149,11 @@ public class RecipeModel {
         modelFirebase.getRecipe(id, new GetRecipeListener() {
             @Override
             public void onComplete(Recipe data) {
-                modelSql.addRecipe(data,null);
+                if(data.getDeleted()==true)
+                    modelSql.delRecipe(data,null);
+                else
+                    modelSql.addRecipe(data,null);
+
                 if(listener != null) {
                     listener.onComplete();
                 }
@@ -159,10 +171,10 @@ public class RecipeModel {
     }
     public LiveData<List<Recipe>> GetAllUserRecipes(){
         if (userRecipesList == null){
-            userRecipesList = modelSql.getAllUserRecipes(user.getUid());
+            userRecipesList = modelSql.getAllUserRecipes(user.getEmail());
             refreshGetAllUserRecipes(null);
         }
-        return recipesList;
+        return userRecipesList;
     }
 
     //Refresh UserRecipesList^^
@@ -173,12 +185,15 @@ public class RecipeModel {
         final SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
         long lastUpdated = sp.getLong("lastUpdatedUserRecipeList",0);
 
-        modelFirebase.getAllUserRecipes(lastUpdated,user.getUid(), new GetAllUserRecipesListener() {
+        modelFirebase.getAllUserRecipes(lastUpdated,user.getEmail(), new GetAllUserRecipesListener() {
             @Override
             public void onComplete(List<Recipe> data) {
                 long lastUp = 0;
                 for (Recipe rec: data) {
-                    modelSql.addRecipe(rec,null);
+                    if(rec.getDeleted()==true)
+                        modelSql.delRecipe(rec,null);
+                    else
+                        modelSql.addRecipe(rec,null);
                     if (rec.getLastUpdated()>lastUp){
                         lastUp = rec.getLastUpdated();
                     }

@@ -1,11 +1,9 @@
 
 package com.example.ninja.ui.create;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,11 +34,9 @@ import com.example.ninja.model.Category;
 import com.example.ninja.model.CategoryModel;
 import com.example.ninja.model.Recipe;
 import com.example.ninja.model.RecipeModel;
-import com.example.ninja.ui.recipe.RecipeFragmentArgs;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -65,7 +61,6 @@ public class CreateFragment extends Fragment {
 
     CreateFragmentArgs bundle;
     Boolean editMode;
-
 
 
 
@@ -121,7 +116,7 @@ public class CreateFragment extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(cookTime.getText().toString().isEmpty() || prepTime.getText().toString().isEmpty() || recipeName.getText().toString().isEmpty() || categoryId==null || applianceId==null)
+                if(instructions.getText().toString().isEmpty() ||cookTime.getText().toString().isEmpty() || prepTime.getText().toString().isEmpty() || recipeName.getText().toString().isEmpty() || categoryId==null || applianceId==null)
                     displayMissingError();
                 else
                     saveRecipe();
@@ -227,9 +222,11 @@ public class CreateFragment extends Fragment {
         recipe.setCategoryID(categoryId);
         recipe.setApplianceID(applianceId);
         recipe.setInstructions(instructions.getText().toString());
-        recipe.setUserCreatorId(user.getEmail());
-        if(!editMode)
-        recipe.setId(this.toString() + recipe.getUserCreatorId());
+        recipe.setDeleted(false);
+        if(!editMode){
+            recipe.setUserCreatorId(user.getEmail());
+            recipe.setId(this.toString() + recipe.getUserCreatorId());
+        }
         else
             recipe.setId(bundle.getEditId());
 
@@ -336,7 +333,6 @@ public class CreateFragment extends Fragment {
             }
         }
     }
-
 
 
     public void onResume() {

@@ -1,4 +1,4 @@
-package com.example.ninja.ui.profile;
+package com.example.ninja.ui.browse;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +9,18 @@ import com.example.ninja.R;
 import com.example.ninja.model.Recipe;
 import java.util.List;
 
-public class ProfileRecipeListAdapter extends RecyclerView.Adapter<ProfileRecipeListViewHolder> {
+
+public class BrowseRecipeListAdapter extends RecyclerView.Adapter<BrowseRecipeListViewHolder>{
+
 
     //Members
     public LiveData<List<Recipe>> data;
     LayoutInflater inflater;
-    private ProfileRecipeListAdapter.OnItemClickListener listener;
+    private BrowseRecipeListAdapter.OnItemClickListener listener;
+
 
     //Constructor
-    public ProfileRecipeListAdapter(LayoutInflater inflater){
+    public BrowseRecipeListAdapter(LayoutInflater inflater){
         this.inflater = inflater;
 
     }
@@ -26,22 +29,22 @@ public class ProfileRecipeListAdapter extends RecyclerView.Adapter<ProfileRecipe
     public interface OnItemClickListener{
         void onItemClick(int position);
     }
-    public void setOnClickListener(ProfileRecipeListAdapter.OnItemClickListener listener){
+    public void setOnClickListener(BrowseRecipeListAdapter.OnItemClickListener listener){
         this.listener = listener;
     }
 
 
     @NonNull
     @Override
-    public ProfileRecipeListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.profile_recipe_list_row,null);
-        ProfileRecipeListViewHolder holder = new ProfileRecipeListViewHolder(view);
+    public BrowseRecipeListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.browse_recipe_list_row,null);
+        BrowseRecipeListViewHolder holder = new BrowseRecipeListViewHolder(view);
         holder.listener = listener;
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProfileRecipeListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BrowseRecipeListViewHolder holder, int position) {
         Recipe recipe = data.getValue().get(position);
         holder.bindData(recipe,position);
     }
@@ -53,7 +56,4 @@ public class ProfileRecipeListAdapter extends RecyclerView.Adapter<ProfileRecipe
         }
         return data.getValue().size();
     }
-
-
-
 }

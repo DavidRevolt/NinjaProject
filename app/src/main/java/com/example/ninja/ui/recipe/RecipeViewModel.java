@@ -1,14 +1,12 @@
 package com.example.ninja.ui.recipe;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.example.ninja.model.Appliance;
 import com.example.ninja.model.ApplianceModel;
 import com.example.ninja.model.Category;
 import com.example.ninja.model.CategoryModel;
 import com.example.ninja.model.Recipe;
 import com.example.ninja.model.RecipeModel;
-
 import java.util.List;
 
 

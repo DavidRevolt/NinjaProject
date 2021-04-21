@@ -85,12 +85,13 @@ public class RecipeModelFirebase {
     public void getAllUserRecipes(long lastUpdated, String uid, RecipeModel.GetAllUserRecipesListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Timestamp ts = new Timestamp(lastUpdated,0);
+        Log.d("TAG", "<<<<GET ALL User RECIPES FROM Model FIREBASE FOR:"+uid + " PART1>>>");
         db.collection("recipes").whereEqualTo("userCreatorId",uid).whereGreaterThanOrEqualTo("lastUpdated",ts).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<Recipe> data = new LinkedList<Recipe>();
                 if (task.isSuccessful()){
-                    Log.d("TAG", "<<<<GET ALL User RECIPES FROM Model FIREBASE>>>");
+                    Log.d("TAG", "<<<<GET ALL User RECIPES FROM Model FIREBASE FOR:"+uid + ">>>");
                     for (DocumentSnapshot document:task.getResult()) {
                         Log.d("TAG", document.getId() + " => " + document.getData());
                         Recipe rec = new Recipe();
@@ -112,7 +113,7 @@ public class RecipeModelFirebase {
                 Recipe recipe = null;
                 if (task.isSuccessful()){
                     DocumentSnapshot doc = task.getResult();
-                    if (doc != null) {
+                    if (doc.exists()) {
                         recipe = new Recipe();
                         recipe.fromMap(doc.getData());
                     }

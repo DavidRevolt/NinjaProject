@@ -1,19 +1,14 @@
 package com.example.ninja.ui.recipe;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +17,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.example.ninja.R;
 import com.example.ninja.model.Appliance;
 import com.example.ninja.model.ApplianceModel;
@@ -30,15 +24,10 @@ import com.example.ninja.model.Category;
 import com.example.ninja.model.CategoryModel;
 import com.example.ninja.model.Recipe;
 import com.example.ninja.model.RecipeModel;
-import com.example.ninja.ui.browse.BrowseViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 public class RecipeFragment extends Fragment {
 
@@ -58,6 +47,9 @@ public class RecipeFragment extends Fragment {
     SwipeRefreshLayout swipeRefresh;
     ProgressBar spinner;
     Recipe recipe;
+    TextView prepTitle;
+    TextView cookTitle;
+    TextView totalTitle;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -87,7 +79,9 @@ public class RecipeFragment extends Fragment {
         editBtn.setVisibility(View.INVISIBLE);
         deleteBtn.setVisibility(View.INVISIBLE);
         spinner.setVisibility(View.INVISIBLE);
-
+        prepTitle = root.findViewById(R.id.RecipeFragm_PrepTitle);;
+        cookTitle = root.findViewById(R.id.RecipeFragm_Cook_Title);;
+        totalTitle = root.findViewById(R.id.RecipeFragm_Total_Title);;
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,46 +163,75 @@ public class RecipeFragment extends Fragment {
         RecipeModel.instance.refreshGetRecipe(recipeID, new RecipeModel.RefreshGetRecipeListener() {
             @Override
             public void onComplete() {
+
                 recipe = recipeViewModel.getRecipe().getValue();
 
-                CategoryModel.instance.refreshGetAllCategories(new CategoryModel.RefreshGetAllCategoriesListener() {
-                    @Override
-                    public void onComplete() {
-                        String name =recipeViewModel.getCategoryList().getValue().get(Integer.parseInt(recipe.getCategoryID())-1).getName();
-                        category.setText(name);
+                if(recipe != null)
+                {
+                    spinner.setVisibility(View.VISIBLE);
+                    CategoryModel.instance.refreshGetAllCategories(new CategoryModel.RefreshGetAllCategoriesListener() {
+                        @Override
+                        public void onComplete() {
+                            if(!recipeViewModel.getCategoryList().getValue().isEmpty()) {
+                                String name = recipeViewModel.getCategoryList().getValue().get(Integer.parseInt(recipe.getCategoryID()) - 1).getName();
+                                category.setText(name);
+                                spinner.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    });
+                    spinner.setVisibility(View.VISIBLE);
+                    ApplianceModel.instance.refreshGetAllAppliances(new ApplianceModel.RefreshGetAllAppliancesListener(){
+                        @Override
+                        public void onComplete() {
+                            if(!recipeViewModel.getApplianceList().getValue().isEmpty())
+                            {
+                                String name2 =recipeViewModel.getApplianceList().getValue().get(Integer.parseInt(recipe.getApplianceID())-1).getName();
+                                appliance.setText(name2);
+                                spinner.setVisibility(View.INVISIBLE);
+                            }
+
+                        }
+
+                    });
+
+                    recipeName.setText(recipe.getTitle());
+                    prepTime.setText(String.valueOf(recipe.getPrepTime()));;
+                    cookTime.setText(String.valueOf(recipe.getCookTime()));
+                    totalTime.setText(String.valueOf(recipe.getTotalTime()));
+                    instructions.setText(recipe.getInstructions());
+                    recipeImg.setImageResource(R.drawable.plate);
+                    if (recipe.getImgURL() != null)
+                        Picasso.get().load(recipe.getImgURL()).placeholder(R.drawable.plate).into(recipeImg);
+
+
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    String currentUserEmail = user.getEmail();
+                    if(recipe.getUserCreatorId().equals(currentUserEmail)){
+                        madeBy.setVisibility(View.INVISIBLE);
+                        editBtn.setVisibility(View.VISIBLE);;
+                        deleteBtn.setVisibility(View.VISIBLE);;
                     }
-                });
-                ApplianceModel.instance.refreshGetAllAppliances(new ApplianceModel.RefreshGetAllAppliancesListener(){
-                    @Override
-                    public void onComplete() {
-                        String name2 =recipeViewModel.getApplianceList().getValue().get(Integer.parseInt(recipe.getApplianceID())-1).getName();
-                        appliance.setText(name2);
-                    }
-
-                });
-
-                recipeName.setText(recipe.getTitle());
-                prepTime.setText(String.valueOf(recipe.getPrepTime()));;
-                cookTime.setText(String.valueOf(recipe.getCookTime()));
-                totalTime.setText(String.valueOf(recipe.getTotalTime()));
-                instructions.setText(recipe.getInstructions());
-                recipeImg.setImageResource(R.drawable.plate);
-                if (recipe.getImgURL() != null)
-                    Picasso.get().load(recipe.getImgURL()).placeholder(R.drawable.plate).into(recipeImg);
-
-
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String currentUserEmail = user.getEmail();
-                if(recipe.getUserCreatorId().equals(currentUserEmail)){
-                    madeBy.setVisibility(View.INVISIBLE);
-                    editBtn.setVisibility(View.VISIBLE);;
-                    deleteBtn.setVisibility(View.VISIBLE);;
+                    else
+                        madeBy.append(recipe.getUserCreatorId());
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(recipe.getTitle());
                 }
-                else
-                madeBy.append(recipe.getUserCreatorId());
-                swipeRefresh.setRefreshing(false);
 
-                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(recipe.getTitle());
+                else //NOT FOUND
+                {
+                    madeBy.setVisibility(View.INVISIBLE);
+                    category.setVisibility(View.INVISIBLE);
+                    appliance.setVisibility(View.INVISIBLE);
+                    recipeName.setText("Recipe Not Found :(");
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Recipe 404");
+                    prepTime.setVisibility(View.INVISIBLE);
+                    cookTime.setVisibility(View.INVISIBLE);
+                    totalTime.setVisibility(View.INVISIBLE);
+                    instructions.setVisibility(View.INVISIBLE);
+                    prepTitle.setVisibility(View.INVISIBLE);
+                    cookTitle.setVisibility(View.INVISIBLE);
+                    totalTitle.setVisibility(View.INVISIBLE);
+                }
+                swipeRefresh.setRefreshing(false);
             }
         });
     }

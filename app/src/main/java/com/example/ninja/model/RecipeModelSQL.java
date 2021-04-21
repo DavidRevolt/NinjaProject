@@ -37,6 +37,8 @@ public class RecipeModelSQL {
         void onComplete();
     }
     public void addRecipe(final Recipe recipe, final AddRecipeListener listener){
+        if(recipe ==null)
+            return;
         class MyAsyncTask extends AsyncTask {
             @Override
             protected Object doInBackground(Object[] objects) {

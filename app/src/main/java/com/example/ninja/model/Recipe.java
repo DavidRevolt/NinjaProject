@@ -28,7 +28,7 @@ public class Recipe {
     private int totalTime;
     private int likesCounter;
     private String instructions;
-
+    private Boolean deleted;
     private String applianceID;
     private String categoryID;
     private Long lastUpdated;
@@ -41,6 +41,7 @@ public class Recipe {
         result.put("imgURL", imgURL);
         result.put("prepTime", prepTime);
         result.put("cookTime", cookTime);
+        result.put("deleted", deleted);
         result.put("totalTime", cookTime+prepTime);
         result.put("likesCounter", likesCounter);
         result.put("instructions", instructions);
@@ -64,6 +65,7 @@ public class Recipe {
         categoryID = (String)map.get("categoryID");
         Timestamp ts = (Timestamp) map.get("lastUpdated");
         lastUpdated = ts.getSeconds();
+        deleted = (Boolean)map.get("deleted");
     }
 
 
@@ -162,5 +164,13 @@ public class Recipe {
 
     public void setTotalTime(int totalTime) {
         this.totalTime = totalTime;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }
