@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
         adapter = new HomeRecipeListAdapter(getLayoutInflater());
         adapter.data = homeViewModel.getRecipeList();
 
-        //Nav2Recipe
+        //Navigation2Recipe
         adapter.setOnClickListener(new HomeRecipeListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -80,9 +80,7 @@ public class HomeFragment extends Fragment {
             }
         });
         refreshData();
-
         recipeRecyclerView.setAdapter(adapter);
-
 
         return root;
     }
@@ -90,7 +88,6 @@ public class HomeFragment extends Fragment {
 
     void refreshData(){
         Log.d("TAG", "<<<<Home Fragment Refreshing Data>>>");
-        //homeProgressBar.setVisibility(View.VISIBLE);
         RecipeModel.instance.refreshGetAllRecipes(new RecipeModel.RefreshGetAllRecipesListener() {
             @Override
             public void onComplete() {
@@ -98,9 +95,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
-
-
 
 }
 

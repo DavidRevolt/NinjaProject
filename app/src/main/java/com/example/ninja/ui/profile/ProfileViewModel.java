@@ -4,6 +4,19 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ProfileViewModel extends ViewModel {
+import com.example.ninja.model.Recipe;
+import com.example.ninja.model.RecipeModel;
 
+import java.util.List;
+
+public class ProfileViewModel extends ViewModel {
+    private LiveData<List<Recipe>> recipeList;
+
+    public ProfileViewModel() {
+        this.recipeList = RecipeModel.instance.GetAllUserRecipes();
+    }
+
+    public LiveData<List<Recipe>> getRecipeList() {
+        return recipeList;
+    }
 }
