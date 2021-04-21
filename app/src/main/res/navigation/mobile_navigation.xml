@@ -75,9 +75,9 @@
             app:argType="string" />
     </fragment>
     <action android:id="@+id/action_global_navigation_recipe" app:destination="@id/navigation_recipe" />
-    <fragment
-        android:id="@+id/navigation_myFavorites"
-        android:name="com.example.ninja.ui.myfavorites.MyFavoritesFragment"
-        android:label="My Favorites"
-        tools:layout="@layout/fragment_my_favorites" />
+    <activity
+        android:id="@+id/navigation_SignOut"
+        android:name="com.example.ninja.SignInActivity"
+        android:label="activity_sign_in"
+        tools:layout="@layout/activity_sign_in" />
 </navigation>

@@ -18,11 +18,11 @@
         android:title="Create" />
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:icon="@drawable/fui_ic_anonymous_white_24dp"
         android:title="@string/my_profile" />
     <item
-        android:id="@+id/navigation_myFavorites"
-        android:icon="@android:drawable/btn_star_big_on"
-        android:title="My Favorites" />
+        android:id="@+id/navigation_SignOut"
+        android:icon="@android:drawable/ic_lock_idle_lock"
+        android:title="SignOut" />
 
 </menu>
