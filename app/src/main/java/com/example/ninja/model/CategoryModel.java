@@ -1,108 +1,150 @@
 package com.example.ninja.model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import com.example.ninja.MyApplication;
 
 import java.util.List;
 
 public class CategoryModel {
     public final static CategoryModel instance = new CategoryModel();
     private CategoryModel(){}
+    CategoryModelFirebase modelFirebase = new CategoryModelFirebase();
+    CategoryModelSQL modelSql = new CategoryModelSQL();
+
 
     public interface DelCategoryListener{
         void onComplete();
     }
     public void delCategory(final Category category, final DelCategoryListener listener){
-        class MyAsyncTask extends AsyncTask {
+        modelFirebase.delCategory(category,listener);
+        modelSql.delCategory(category, new CategoryModelSQL.DelCategoryListener() {
             @Override
-            protected Object doInBackground(Object[] objects) {
-                AppLocalDb.db.categoryDao().delete(category);
-                return null;
-            }
+            public void onComplete() {
+                refreshGetAllCategories(new RefreshGetAllCategoriesListener() {
+                    @Override
+                    public void onComplete() {
+                        listener.onComplete();
+                    }
+                });
 
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                if (listener != null){
-                    listener.onComplete();
-                }
             }
-        };
-        MyAsyncTask task = new MyAsyncTask();
-        task.execute();
+        });
     }
+
 
     public interface AddCategoryListener{
         void onComplete();
     }
     public void addCategory(final Category category, final AddCategoryListener listener){
-        class MyAsyncTask extends AsyncTask {
+        modelFirebase.addCategory(category, new CategoryModel.AddCategoryListener() {
             @Override
-            protected Object doInBackground(Object[] objects) {
-                AppLocalDb.db.categoryDao().insertAll(category);
-                return null;
+            public void onComplete() {
+                refreshGetAllCategories(new RefreshGetAllCategoriesListener(){
+                    @Override
+                    public void onComplete() {
+                        listener.onComplete();
+                    }
+                });
             }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                if (listener != null){
-                    listener.onComplete();
-                }
-            }
-        };
-        MyAsyncTask task = new MyAsyncTask();
-        task.execute();
+        });
     }
 
-    public interface UpdateCategoryListener{
+
+    public interface UpdateCategoryListener extends AddCategoryListener {
         void onComplete();
     }
     public void updateCategory(final Category category, final UpdateCategoryListener listener){
-        class MyAsyncTask extends AsyncTask {
+        modelFirebase.updateCategory(category, new CategoryModel.UpdateCategoryListener() {
             @Override
-            protected Object doInBackground(Object[] objects) {
-                AppLocalDb.db.categoryDao().updateCategory(category);
-                return null;
+            public void onComplete() {
+                refreshGetAllCategories(new RefreshGetAllCategoriesListener() {
+                    @Override
+                    public void onComplete() {
+                        listener.onComplete();
+                    }
+                });
             }
+        });
+    }
 
+
+
+
+    //GET ALL CATEGORIES
+    LiveData<List<Category>> categoriesList;
+    public interface GetAllCategoriesListener {
+        void onComplete(List<Category> data);
+    }
+    public LiveData<List<Category>> GetAllCategories(){
+        if (categoriesList == null){
+            categoriesList = modelSql.getAllCategories();
+            refreshGetAllCategories(null);
+        }
+        return categoriesList;
+    }
+
+
+
+    //Refresh CategoriesList^^
+    public interface RefreshGetAllCategoriesListener{
+        void onComplete();
+    }
+
+    public void refreshGetAllCategories(RefreshGetAllCategoriesListener listener){
+        final SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
+        long lastUpdated = sp.getLong("lastUpdatedCategoryList",0);
+
+        modelFirebase.getAllCategories(lastUpdated, new GetAllCategoriesListener() {
             @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                if (listener != null){
+            public void onComplete(List<Category> data) {
+                long lastUp = 0;
+                for (Category rec: data) {
+                    modelSql.addCategory(rec,null);
+                    if (rec.getLastUpdated()>lastUp){
+                        lastUp = rec.getLastUpdated();
+                    }
+                }
+                sp.edit().putLong("lastUpdatedCategoryList", lastUp).commit();
+                if(listener != null) {
                     listener.onComplete();
                 }
             }
-        };
-        MyAsyncTask task = new MyAsyncTask();
-        task.execute();
+        });
     }
 
 
-    public interface GetCategoryRecipesListener{
-        void onComplete(List<CategoryWithRecipes> data);
+
+
+    //GET CATEGORY
+    LiveData<Category> category;
+    public interface GetCategoryListener{
+        void onComplete(Category category);
     }
-    public void getAllCategoryRecipes(final String id, final GetCategoryRecipesListener listener){
-        class MyAsyncTask extends AsyncTask{
-            List<CategoryWithRecipes> data;
+    public LiveData<Category> getCategory(String id){
+        category = modelSql.getCategory(id);
+        refreshGetCategory(id, null);
+        return category;
+    }
+
+    //Refresh Category^^
+    public interface RefreshGetCategoryListener{
+        void onComplete();
+    }
+    public void refreshGetCategory(String id, RefreshGetCategoryListener listener){
+        modelFirebase.getCategory(id, new GetCategoryListener() {
             @Override
-            protected Object doInBackground(Object[] objects) {
-                data = AppLocalDb.db.categoryDao().getCategoryWithRecipes(id);
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            public void onComplete(Category data) {
+                modelSql.addCategory(data,null);
+                if(listener != null) {
+                    listener.onComplete();
                 }
-                return null;
             }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                listener.onComplete(data);
-            }
-        }
-        MyAsyncTask task = new MyAsyncTask();
-        task.execute();
+        });
     }
-
 }

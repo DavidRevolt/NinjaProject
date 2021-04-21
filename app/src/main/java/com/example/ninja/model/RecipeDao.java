@@ -1,5 +1,6 @@
 package com.example.ninja.model;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -20,6 +21,11 @@ public interface RecipeDao {
     public void updateRecipe(Recipe... recipe);
 
     @Query("select * from Recipe")
-    List<Recipe> getAll();
+    public LiveData<List<Recipe>> getAll();
 
+    @Query("SELECT * FROM Recipe where Recipe.id = :id")
+    public LiveData<Recipe> getRecipe(String id);
+
+    @Query("SELECT * FROM Recipe where Recipe.userCreatorId = :id")
+    public LiveData<List<Recipe>> getUserRecipes(String id);
 }

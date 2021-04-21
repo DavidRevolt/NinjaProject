@@ -1,5 +1,6 @@
 package com.example.ninja.model;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -21,9 +22,8 @@ public interface ApplianceDao {
     public void updateAppliance(Appliance... appliance);
 
     @Query("select * from Appliance")
-    List<Appliance> getAll();
+    public LiveData<List<Appliance>> getAll();
 
-    @Transaction
     @Query("SELECT * FROM Appliance where Appliance.id = :id")
-    public List<ApplianceWithRecipes> getApplianceWithRecipes(String id);
+    public LiveData<Appliance> getAppliance(String id);
 }

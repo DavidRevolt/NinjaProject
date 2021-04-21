@@ -7,19 +7,18 @@ import com.example.ninja.MyApplication;
 
 //DB MANGER, update version after every change!
 
-@Database(entities = {Appliance.class, Category.class, Recipe.class, User.class}, version = 1)
+@Database(entities = {Appliance.class, Category.class, Recipe.class}, version = 1)
 abstract class AppLocalDbRepository extends RoomDatabase {
     public abstract ApplianceDao applianceDao();
     public abstract CategoryDao categoryDao();
     public abstract RecipeDao recipeDao();
-    public abstract UserDao userDao();
 }
 
 public class AppLocalDb{
     static public AppLocalDbRepository db =
             Room.databaseBuilder(MyApplication.context,
                     AppLocalDbRepository.class,
-                    "myDB1.db")
+                    "DB12.db")
                     .fallbackToDestructiveMigration()
                     .build();
 }

@@ -1,5 +1,4 @@
 package com.example.ninja;
-
 import android.app.Application;
 import android.content.Context;
 
