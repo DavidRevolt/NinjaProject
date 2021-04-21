@@ -223,8 +223,8 @@ public class CreateFragment extends Fragment {
         recipe.setApplianceID(applianceId);
         recipe.setInstructions(instructions.getText().toString());
         recipe.setDeleted(false);
+        recipe.setUserCreatorId(user.getEmail());
         if(!editMode){
-            recipe.setUserCreatorId(user.getEmail());
             recipe.setId(this.toString() + recipe.getUserCreatorId());
         }
         else

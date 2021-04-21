@@ -212,7 +212,7 @@ public class RecipeFragment extends Fragment {
                         deleteBtn.setVisibility(View.VISIBLE);;
                     }
                     else
-                        madeBy.append(recipe.getUserCreatorId());
+                        madeBy.setText("Made By: " + recipe.getUserCreatorId());
                     ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(recipe.getTitle());
                 }
 

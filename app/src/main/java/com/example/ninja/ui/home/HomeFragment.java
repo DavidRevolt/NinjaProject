@@ -47,6 +47,8 @@ public class HomeFragment extends Fragment {
         recipeRecyclerView = root.findViewById(R.id.HomeRecipeList);
         recipeRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         recipeRecyclerView.setLayoutManager(layoutManager);
         adapter = new HomeRecipeListAdapter(getLayoutInflater());
         adapter.data = homeViewModel.getRecipeList();
